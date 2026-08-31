@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سجل المعايير والمتطلبات — بحسب اللجان المختصة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262A;
+    --ink-soft:#4B5B5E;
+    --paper:#F6F2E9;
+    --paper-raised:#FBF9F3;
+    --teal-deep:#123C47;
+    --teal-mid:#1F5A66;
+    --teal-tint:#E4EDEC;
+    --gold:#B9862E;
+    --gold-soft:#EFE0BE;
+    --line:#D8D0BC;
+    --line-soft:#E7E1D0;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cairo',sans-serif;
+  }
+  ::selection{ background:var(--gold-soft); }
+  a{ color:inherit; }
+
+  /* ---------- Skip link / accessibility ---------- */
+  .skip-link{
+    position:absolute; right:-999px; top:0; background:var(--teal-deep); color:#fff;
+    padding:10px 16px; z-index:200;
+  }
+  .skip-link:focus{ right:8px; top:8px; }
+
+  /* ---------- Header ---------- */
+  header.masthead{
+    background:var(--teal-deep);
+    color:#F3EFE3;
+    padding:38px 5vw 26px;
+    border-bottom:6px solid var(--gold);
+  }
+  .masthead-inner{
+    max-width:1180px; margin:0 auto;
+  }
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.02em; color:#BFD3D1;
+    margin-bottom:14px;
+  }
+  .kicker .dot{ width:6px; height:6px; background:var(--gold); border-radius:50%; }
+  h1.title{
+    font-size:clamp(28px,4vw,42px);
+    font-weight:800;
+    margin:0 0 10px;
+    color:#fff;
+    line-height:1.25;
+  }
+  p.subtitle{
+    max-width:62ch;
+    color:#CFE0DE;
+    font-size:16px;
+    margin:0 0 26px;
+  }
+  .stat-row{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid rgba(255,255,255,.18);
+    margin-top:8px;
+  }
+  .stat{
+    padding:16px 26px 4px 0;
+    border-left:1px solid rgba(255,255,255,.18);
+    min-width:140px;
+  }
+  .stat:first-child{ padding-right:0; }
+  .stat .num{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:30px;
+    color:#fff;
+    display:block;
+  }
+  .stat .label{
+    font-size:13px;
+    color:#AFC7C4;
+  }
+
+  /* ---------- Mode tabs ---------- */
+  .mode-tabs-wrap{
+    max-width:1180px; margin:0 auto; padding:22px 5vw 0;
+  }
+  .mode-tabs{
+    display:flex; gap:0; border-bottom:1px solid var(--line);
+  }
+  .mode-tab{
+    font-family:'Cairo',sans-serif;
+    font-weight:700; font-size:14.5px;
+    background:none; border:none; cursor:pointer;
+    color:var(--ink-soft);
+    padding:10px 18px 12px;
+    border-bottom:3px solid transparent;
+    margin-bottom:-1px;
+  }
+  .mode-tab.active{
+    color:var(--teal-deep);
+    border-bottom-color:var(--gold);
+  }
+  .mode-tab:hover{ color:var(--teal-deep); }
+  .mode-hint{
+    font-size:13px; color:var(--ink-soft); margin:10px 0 0;
+  }
+
+  /* ---------- Committee charter card ---------- */
+  .charter-head{
+    margin-bottom:22px; padding-bottom:16px; border-bottom:2px solid var(--teal-deep);
+  }
+  .charter-head .panel-eyebrow{ color:var(--gold); }
+  .charter-head .panel-title{ margin-bottom:8px; }
+  .charter-summary{
+    display:flex; gap:22px; flex-wrap:wrap; margin-top:10px;
+  }
+  .charter-summary .cs-item{ font-size:13px; color:var(--ink-soft); }
+  .charter-summary .cs-item b{
+    font-family:'Cairo',sans-serif; color:var(--teal-deep); font-size:15px; display:block;
+  }
+
+  .axis{
+    margin-bottom:30px;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+  }
+  .axis-head{
+    background:var(--teal-deep);
+    color:#fff;
+    padding:14px 18px;
+  }
+  .axis-head .axis-name{
+    font-family:'Cairo',sans-serif; font-weight:700; font-size:16.5px;
+    margin:0 0 6px;
+  }
+  .axis-head .axis-desc{
+    font-size:13.5px; color:#CFE0DE; line-height:1.6; margin:0;
+  }
+  .axis-body{ padding:16px 18px 6px; }
+  .axis-criterion{ margin-bottom:16px; }
+  .axis-criterion .ac-head{
+    font-size:13.5px; font-weight:700; color:var(--teal-mid);
+    margin-bottom:6px;
+    border-right:2px solid var(--gold);
+    padding-right:8px;
+  }
+  ol.task-list{ list-style:none; margin:0; padding:0; }
+  ol.task-list li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:7px 4px;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  ol.task-list li:last-child{ border-bottom:none; }
+  ol.task-list li .rn{
+    flex:none; font-family:'Cairo',sans-serif; font-weight:700;
+    color:var(--gold); font-size:13.5px; min-width:24px;
+  }
+  ol.task-list li .rt{ font-size:14.5px; flex:1; }
+  .joint-badge{
+    display:inline-block; font-size:11px; color:var(--teal-deep);
+    background:var(--teal-tint); padding:1px 7px; margin-top:4px;
+  }
+
+  /* ---------- Search bar ---------- */
+  .search-wrap{
+    max-width:1180px; margin:0 auto; padding:22px 5vw 0;
+  }
+  .search-box{
+    position:relative;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    display:flex; align-items:center;
+    padding:0 14px;
+  }
+  .search-box input{
+    flex:1;
+    border:none; background:transparent;
+    font-family:'Tajawal',sans-serif;
+    font-size:16px;
+    padding:14px 10px;
+    color:var(--ink);
+    outline:none;
+  }
+  .search-box svg{ flex:none; opacity:.55; }
+  .search-meta{
+    font-size:13px; color:var(--ink-soft); margin-top:8px; min-height:18px;
+  }
+  .search-meta b{ color:var(--teal-deep); }
+  .clear-btn{
+    font-family:'Tajawal',sans-serif;
+    font-size:13px;
+    color:var(--teal-mid);
+    background:none;border:none;
+    cursor:pointer;
+    padding:6px 8px;
+    text-decoration:underline;
+    display:none;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout{
+    max-width:1180px; margin:0 auto;
+    display:flex; gap:34px;
+    padding:26px 5vw 80px;
+    align-items:flex-start;
+  }
+  @media (max-width:860px){
+    .layout{ flex-direction:column; }
+  }
+
+  /* ---------- Sidebar / registry index ---------- */
+  nav.index{
+    flex:0 0 340px;
+    position:sticky; top:18px;
+    max-height:calc(100vh - 36px);
+    overflow-y:auto;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+  }
+  @media (max-width:860px){
+    nav.index{ position:static; max-height:none; flex:1 1 auto; width:100%; }
+  }
+  nav.index .index-head{
+    padding:14px 16px 10px;
+    border-bottom:1px solid var(--line-soft);
+    font-size:13px;
+    color:var(--ink-soft);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  nav.index .index-head button{
+    font-family:'Tajawal',sans-serif;
+    font-size:12px; color:var(--teal-mid);
+    background:none;border:1px solid var(--line); cursor:pointer;
+    padding:4px 8px;
+  }
+  nav.index .index-head button:hover{ background:var(--teal-tint); }
+  ul.committee-list{
+    list-style:none; margin:0; padding:0;
+  }
+  ul.committee-list li{
+    border-bottom:1px solid var(--line-soft);
+  }
+  ul.committee-list button{
+    width:100%;
+    display:flex; align-items:baseline; gap:10px;
+    text-align:right;
+    background:none; border:none; cursor:pointer;
+    padding:11px 16px;
+    font-family:'Tajawal',sans-serif;
+    color:var(--ink);
+  }
+  ul.committee-list button .n{
+    font-family:'Cairo',sans-serif; font-weight:700;
+    color:var(--ink-soft); font-size:13px;
+    flex:none; min-width:22px;
+  }
+  ul.committee-list button .name{
+    flex:1; font-size:14.5px; line-height:1.4;
+  }
+  ul.committee-list button .cnt{
+    flex:none; font-size:12px; color:#fff;
+    background:var(--teal-mid);
+    padding:1px 7px;
+  }
+  ul.committee-list li.active button{
+    background:var(--teal-tint);
+  }
+  ul.committee-list li.active button .name{
+    color:var(--teal-deep); font-weight:700;
+  }
+  ul.committee-list li.active{ border-right:3px solid var(--gold); }
+  ul.committee-list button:hover{ background:var(--teal-tint); }
+  ul.committee-list li.hidden{ display:none; }
+
+  /* ---------- Main panel ---------- */
+  main{ flex:1; min-width:0; }
+
+  .panel-head{
+    margin-bottom:18px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--teal-deep);
+  }
+  .panel-eyebrow{
+    font-size:13px; color:var(--gold); font-weight:700; margin-bottom:6px;
+  }
+  .panel-title{
+    font-size:24px; font-weight:800; color:var(--teal-deep); margin:0 0 6px;
+    line-height:1.35;
+  }
+  .panel-desc{ color:var(--ink-soft); font-size:14.5px; }
+
+  .criterion{
+    margin-bottom:26px;
+  }
+  .criterion-head{
+    display:flex; align-items:baseline; gap:10px;
+    background:var(--teal-tint);
+    padding:9px 14px;
+    border-right:3px solid var(--teal-mid);
+    margin-bottom:10px;
+  }
+  .criterion-head .cnum{
+    font-family:'Cairo',sans-serif; font-weight:700;
+    color:var(--teal-deep); font-size:14px; flex:none;
+  }
+  .criterion-head .ctext{
+    font-weight:700; color:var(--teal-deep); font-size:15px;
+  }
+  ol.req-list{
+    list-style:none; margin:0; padding:0;
+  }
+  ol.req-list li{
+    display:flex; gap:12px;
+    padding:9px 6px 9px 2px;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  ol.req-list li:last-child{ border-bottom:none; }
+  ol.req-list li .rn{
+    flex:none; font-family:'Cairo',sans-serif; font-weight:700;
+    color:var(--gold); font-size:14px; min-width:26px;
+  }
+  ol.req-list li .rt{
+    font-size:15px; color:var(--ink);
+  }
+  mark{
+    background:var(--gold-soft);
+    color:var(--ink);
+    padding:0 1px;
+  }
+
+  /* ---------- Search results (flattened) ---------- */
+  .result-item{
+    padding:12px 14px;
+    border:1px solid var(--line-soft);
+    margin-bottom:10px;
+    background:var(--paper-raised);
+  }
+  .result-item .tags{
+    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;
+  }
+  .result-item .tag{
+    font-size:11.5px;
+    background:var(--teal-tint); color:var(--teal-deep);
+    padding:2px 8px;
+  }
+  .result-item .tag.crit{ background:var(--gold-soft); color:#6B4E14; }
+  .result-item .rn{
+    font-family:'Cairo',sans-serif; font-weight:700; color:var(--gold);
+    margin-left:6px;
+  }
+  .empty-state{
+    padding:40px 20px; text-align:center; color:var(--ink-soft);
+    border:1px dashed var(--line);
+  }
+
+  footer{
+    max-width:1180px; margin:0 auto; padding:0 5vw 50px;
+    color:var(--ink-soft); font-size:12.5px;
+    border-top:1px solid var(--line-soft); padding-top:16px;
+  }
+
+  /* scrollbar (webkit) subtle */
+  nav.index::-webkit-scrollbar{ width:8px; }
+  nav.index::-webkit-scrollbar-thumb{ background:var(--line); }
+
+  @media (prefers-reduced-motion: no-preference){
+    header.masthead{ animation: fadeIn .5s ease; }
+  }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:none;} }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">تخطَّ إلى المحتوى</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="kicker"><span class="dot"></span> برنامج المدن الصحية — سجل تنظيمي</div>
+    <h1 class="title">المعايير والمتطلبات موزّعة بحسب اللجان المختصة</h1>
+    <p class="subtitle">دليل تفاعلي لجميع معايير ومتطلبات المدينة الصحية، مبوّبة بحسب اللجنة أو مجموعة اللجان المسؤولة عن تنفيذ كل بند، مع إمكانية البحث والتصفية المباشرة.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="num">٦٨</span><span class="label">معياراً رئيسياً</span></div>
+      <div class="stat"><span class="num">٢٢٠</span><span class="label">متطلباً تفصيلياً</span></div>
+      <div class="stat"><span class="num">١١</span><span class="label">لجنة رئيسية معتمدة</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="mode-tabs-wrap">
+  <div class="mode-tabs" role="tablist">
+    <button class="mode-tab active" id="tabCharter" role="tab" aria-selected="true">بطاقات اختصاص اللجان</button>
+    <button class="mode-tab" id="tabRegistry" role="tab" aria-selected="false">السجل الكامل والبحث</button>
+  </div>
+  <p class="mode-hint" id="modeHint">بطاقة مستقلة لكل لجنة: محاورها، شرح كل محور، ومعاييرها ومتطلباتها — لتوضيح اختصاص كل لجنة ومنع تداخل المهام.</p>
+</div>
+
+<div class="search-wrap" id="searchWrap" style="display:none;">
+  <div class="search-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="searchInput" type="text" placeholder="ابحث في نص المتطلبات أو اسم اللجنة…" autocomplete="off">
+    <button class="clear-btn" id="clearBtn">مسح</button>
+  </div>
+  <div class="search-meta" id="searchMeta"></div>
+</div>
+
+<div class="layout">
+  <nav class="index" aria-label="فهرس اللجان">
+    <div class="index-head">
+      <span id="indexHeadLabel">اللجان الرئيسية (١١)</span>
+      <button id="showAllBtn">عرض الكل</button>
+    </div>
+    <ul class="committee-list" id="committeeList"></ul>
+  </nav>
+
+  <main id="main"></main>
+</div>
+
+<footer>
+  إعادة تنظيم المعايير والمتطلبات بحسب اللجنة أو تركيبة اللجان المختصة، كما وردت في الوثيقة الأصلية — النصوص كاملة دون إحالة إلى رقم الصفحة. بطاقات الاختصاص توضّح محاور عمل كل لجنة لمنع تداخل المهام بين اللجان.
+</footer>
+
+<script>
+const REGISTRY = [{"committee": "مكتب معالي المحافظة", "count": 1, "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 1, "text": "تشكيل اللجنة الرئيسية للمدينة الصحية"}]}]}, {"committee": "المنسق العام للمدينة الصحية", "count": 4, "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 2, "text": "تحديد وتشكيل اللجان الفرعية اللازمة"}]}, {"crit_num": 2, "crit_text": "تجتمع لجنة المدينة الصحية واللجان الفرعية بشكل منتظم", "items": [{"num": 5, "text": "تتوفر محاضر الاجتماعات مع الأجندة وجدول أعمال واضح وكذلك الإجراءات المتخذة"}]}, {"crit_num": 3, "crit_text": "تحليل شامل للوضع (بما في ذلك تحليل السبب الجذري) يتم تنفيذه من قبل اللجنة الرئيسية للمدينة الصحية واللجان الفرعية", "items": [{"num": 7, "text": "استخدام عدة أدوات وأساليب في تحليل الوضع الراهن (مثل التحليل الرباعي، تحليل جذور المشكلة، نظام الخرائط الجغرافي، استخدام البيانات والاحصاءات من جهات معتمدة من الدولة)"}]}, {"crit_num": 7, "crit_text": "متابعة وتقييم وتوثيق تدخلات المدينة الصحية", "items": [{"num": 12, "text": "وجود نظام للمتابعة والتقييم \"عدد التقارير\""}]}]}, {"committee": "(اللجنة التنسيقية) اللجنة الرئيسية", "count": 1, "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 3, "text": "التمثيل العادل لفئات المجتمع ضمن اللجان (حيث تضمن العضوية مجموعات ممثلة للنساء، الشباب، ذوي الإعاقة، كبار السن، رجال الأعمال ....إلخ)"}]}]}, {"committee": "إدارة المدن الصحية", "count": 1, "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 4, "text": "تدريب أعضاء اللجنة الرئيسية واللجان الفرعية في مفهوم وأهداف المدينة الصحية وأدوات تطبيق منهجية المدن الصحية"}]}]}, {"committee": "اللجنة الرئيسية واللجان الفرعية", "count": 1, "criteria": [{"crit_num": 3, "crit_text": "تحليل شامل للوضع (بما في ذلك تحليل السبب الجذري) يتم تنفيذه من قبل اللجنة الرئيسية للمدينة الصحية واللجان الفرعية", "items": [{"num": 6, "text": "وجود تحليل شامل للوضع الراهن"}]}]}, {"committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "count": 13, "criteria": [{"crit_num": 4, "crit_text": "تم إجراء تحديد أصحاب العلاقة وتحليل اهتماماتهم", "items": [{"num": 8, "text": "قائمة بجميع أصحاب العلاقة المحتملين وتحليلهم (الدور، الاهتمام، التأثير، وما إلى ذلك متاح)"}]}, {"crit_num": 5, "crit_text": "إعداد ملف/مرتسم المدينة الصحية", "items": [{"num": 9, "text": "تم إعداد ملف تعريفي للمدينة الصحية وتحديثه واستخدامه لأغراض التخطيط والمتابعة والتسويق"}, {"num": 10, "text": "مشاركة لجان المدينة الصحية وأصحاب العلاقة والشركاء في اعداد الملف"}]}, {"crit_num": 6, "crit_text": "إعداد استراتيجية وخطة تنمية متعددة القطاعات للمدينة الصحية", "items": [{"num": 11, "text": "تم استخدام المعلومات والنتائج التي تم الحصول عليها في تحليل الوضع الراهن للتخطيط لأنشطة ومشاريع المدينة الصحية"}]}, {"crit_num": 7, "crit_text": "متابعة وتقييم وتوثيق تدخلات المدينة الصحية", "items": [{"num": 13, "text": "يتم توثيق التجارب والتقدم المحرز"}, {"num": 14, "text": "تم تحديد أولويات البحوث والدراسات الخاصة بالمدينة الصحية"}]}, {"crit_num": 8, "crit_text": "تعزيز البحث وتوليد الأدلة وتمكين المعرفة", "items": [{"num": 15, "text": "عدد المعاهد البحثية والأكاديمية المشاركة"}, {"num": 16, "text": "دليل على مشاركة المجتمع في البحث وتجميع الأدلة"}, {"num": 17, "text": "عدد الأبحاث التي أجريت"}, {"num": 18, "text": "عدد الأبحاث المنشورة"}, {"num": 19, "text": "عدد ملخصات السياسات التي تم إعدادها"}, {"num": 20, "text": "عدد الحوارات التي أجريت مع أصحاب القرار"}, {"num": 21, "text": "عدد مؤتمرات/منتديات المدينة الصحية التي أجريت"}]}]}, {"committee": "اللجنة الإعلامية", "count": 5, "criteria": [{"crit_num": 9, "crit_text": "التسويق والترويج والدعوة إلى مفهوم ومنهجية المدينة الصحية", "items": [{"num": 22, "text": "إنتاج ونشر مواد إبداعية مبتكرة للتسويق والترويج لمفهوم المدينة الصحية"}, {"num": 23, "text": "لدى المدينة الصحية موقع إلكتروني تفاعلي"}, {"num": 24, "text": "تُستخدم وسائل التواصل الاجتماعي للتسويق والترويج والدعوة"}, {"num": 25, "text": "مشاركة وسائل الإعلام وتفاعلها"}, {"num": 26, "text": "عدد التغطيات الإعلامية"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "count": 4, "criteria": [{"crit_num": 10, "crit_text": "تم إدراج الصحة في جميع السياسات وتعزيز الدبلوماسية الصحية من خلال التعاون والتنسيق بين القطاعات الحكومية والشركاء الفاعلين", "items": [{"num": 27, "text": "عدد مذكرات التعاون الموقعة"}, {"num": 28, "text": "عدد خطط العمل المشترك مع الشركاء وأصحاب العلاقة (بما في ذلك المؤسسات الأكاديمية والمعاهد البحثية)"}]}, {"crit_num": 16, "crit_text": "تعزيز القيادة المحلية المسؤولة والمستجيبة للمدن", "items": [{"num": 36, "text": "نسبة السكان الراضين عن تجربتهم الأخيرة في التعامل مع الخدمات العامة"}, {"num": 37, "text": "وجود ميزانية في الحكومة المحلية للإنفاق على الخدمات العامة وبحسب القطاع"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "count": 3, "criteria": [{"crit_num": 10, "crit_text": "تم إدراج الصحة في جميع السياسات وتعزيز الدبلوماسية الصحية من خلال التعاون والتنسيق بين القطاعات الحكومية والشركاء الفاعلين", "items": [{"num": 29, "text": "عدد السياسات/الاستراتيجيات/الخطط التي تعالج أو تدمج الصحة والمحددات الاجتماعية للصحة وتتماشى بشكل كامل مع أهداف التنمية المستدامة"}]}, {"crit_num": 11, "crit_text": "تعزيز الوعي وتنمية المهارات لأجل قيادة فاعلة", "items": [{"num": 30, "text": "عدد أنشطة التدريب على القيادة وبناء القدرات التي تستهدف إعداد القادة بما في ذلك الصف الثاني"}]}, {"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 31, "text": "عدد الدورات التدريبية في مجال تقييم الأثر الصحي"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية", "count": 1, "criteria": [{"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 32, "text": "عدد دراسات تقييم الأثر الصحي التي أجريت في المدينة الصحية"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "count": 1, "criteria": [{"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج"}]}]}, {"committee": "اللجنة الصحية واللجنة الاجتماعية", "count": 6, "criteria": [{"crit_num": 14, "crit_text": "يتم التعامل مع القضايا الصحية والاجتماعية المتعلقة بتحقيق العدالة والإنصاف باعتبارها أولوية", "items": [{"num": 34, "text": "خطة عمل وتدخلات/مبادرات في المدينة الصحية تعالج عدم الانصاف والمساواة"}]}, {"crit_num": 15, "crit_text": "التدخلات والأنشطة الصحية والاجتماعية التي تعالج عدم الانصاف والمساواة", "items": [{"num": 35, "text": "عدد وأنواع التدخلات الرامية إلى معالجة عدم الإنصاف والمساواة"}]}, {"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 97, "text": "نسبة حالات الاضطرابات العقلية وتعاطي المخدرات التي تم تحديدها وتتلقى الدعم والمساعدة من المجتمع"}, {"num": 101, "text": "توافر خدمات الصحة النفسية والعقلية وخدمات الدعم النفسي والاجتماعي وإمكانية الوصول إليها لضحايا جميع أنواع العنف"}]}, {"crit_num": 50, "crit_text": "جعل المدينة صديقة للأطفال", "items": [{"num": 161, "text": "الأنشطة ذات الأولوية لبداية صحية في الحياة، مثل تنمية الطفولة المبكرة"}, {"num": 162, "text": "اعتماد مبادرة المنزل والمجتمع الصديقين للأطفال"}]}]}, {"committee": "اللجنة الصحية واللجنة الإعلامية", "count": 9, "criteria": [{"crit_num": 17, "crit_text": "تعزيز الثقافة الصحية", "items": [{"num": 38, "text": "عدد أنشطة محو الأمية الصحية التي تستهدف المجتمعات المحلية"}, {"num": 39, "text": "عدد التطبيقات المستخدمة/المطورة"}, {"num": 40, "text": "عدد مواد الإعلام والتواصل والتعليم المنتجة"}]}, {"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 149, "text": "يتم استخدام وسائل الإعلام ووسائط التواصل الاجتماعي للترويج للغذاء الصحي"}]}, {"crit_num": 57, "crit_text": "دعم أنشطة تعزيز الصحة (بما في ذلك وسائل الإعلام والتعليم والاتصال)", "items": [{"num": 192, "text": "عدد المتطوعين الصحيين الذين تم تدريبهم على القضايا الصحية ذات الأولوية والبرامج المتعلقة بالصحة"}, {"num": 193, "text": "وتيرة أنشطة تعزيز الصحة"}, {"num": 194, "text": "استخدام وسائل التواصل الاجتماعي"}, {"num": 195, "text": "إنتاج مواد المعلومات والتعليم والاتصال"}, {"num": 196, "text": "الاحتفال بأيام الصحة العالمية"}]}]}, {"committee": "اللجنة الاجتماعية", "count": 20, "criteria": [{"crit_num": 18, "crit_text": "تعزيز الحوار الاجتماعي والمشاركة والتضامن الاجتماعي والإندماج", "items": [{"num": 41, "text": "عدد المنتديات النقاشية الاجتماعية (سواء وجهاً لوجه أو افتراضياً)"}, {"num": 42, "text": "يعمل برنامج المدن الصحية في المدينة من خلال آلية واضحة تهدف لمشاركة المجتمع المدني والذي يضم فئات المجتمع المختلفة وتعمل بانتظام"}, {"num": 43, "text": "عدد الحوارات والاجتماعات التي عقدت وعدد المنظمات والأفراد الذين شاركوا فيها"}]}, {"crit_num": 19, "crit_text": "رسم خريطة للمشهد الاجتماعي في المدينة مع الاهتمام باحتياجات الأشخاص ذوي الاحتياجات الاجتماعية", "items": [{"num": 45, "text": "نسبة الأسر/الأفراد ذوي الاحتياجات الاجتماعية"}]}, {"crit_num": 20, "crit_text": "ضمان وصول الدعم الاجتماعي للفئات الأكثر احتياجاً", "items": [{"num": 46, "text": "وجود برامج وشبكات للحماية والمساعدة الاجتماعية"}, {"num": 47, "text": "نسبة الأسر أو الأفراد المستفيدة الذين يتم دعمهم"}]}, {"crit_num": 21, "crit_text": "دعم المشاريع والمبادرات المجتمعية المحلية", "items": [{"num": 48, "text": "عدد المشاريع والمبادرات"}, {"num": 49, "text": "عدد الأسر المستفيدة من المشاريع"}, {"num": 50, "text": "معدل البطالة حسب الجنس والعمر والأشخاص ذوي الإعاقة"}]}, {"crit_num": 22, "crit_text": "تعزيز أنشطة تنمية المهارات/المهن", "items": [{"num": 51, "text": "نسبة العمالة غير الرسمية من إجمالي العمالة"}, {"num": 52, "text": "عدد الوظائف التي تم إنشاؤها"}, {"num": 53, "text": "عدد معاهد التدريب المهني/المهارات المتعاونة"}, {"num": 54, "text": "عدد أنشطة التدريب المهني/المهارات"}]}, {"crit_num": 34, "crit_text": "الترويج لتعزيز فرص الحصول على السكن الملائم", "items": [{"num": 102, "text": "تحديد تعريف/معيار توافقي للإسكان الملائم (مع مراعاة معايير وكالات الأمم المتحدة والمعايير الوطنية)"}, {"num": 103, "text": "تحديد نسبة سكان المناطق الحضرية الذين يعيشون في الأحياء الفقيرة أو المستوطنات غير الرسمية أو المساكن غير الملائمة من خلال بيانات محددة ديموغرافياً ورسم خرائط مكانية"}, {"num": 104, "text": "عدد التدخلات التي تم تنفيذها لتحسين الأحياء الفقيرة/تخفيف آثار الإسكان غير الملائم"}, {"num": 105, "text": "عدد الأسر المستفيدة من تدخلات تحسين الأحياء الفقيرة/تخفيف آثار الإسكان غير الملائم"}]}, {"crit_num": 46, "crit_text": "تعزيز النشاط البدني والحياة النشطة للأشخاص في جميع الفئات العمرية", "items": [{"num": 141, "text": "المبادرات التي تشجع على المشي وركوب الدراجات"}, {"num": 142, "text": "المبادرات التي تستثمر في النقل الصحي"}]}, {"crit_num": 50, "crit_text": "جعل المدينة صديقة للأطفال", "items": [{"num": 163, "text": "توافر خدمات حماية الطفل والوصول إليها"}]}]}, {"committee": "اللجنة الإعلامية واللجنة الاجتماعية", "count": 1, "criteria": [{"crit_num": 19, "crit_text": "رسم خريطة للمشهد الاجتماعي في المدينة مع الاهتمام باحتياجات الأشخاص ذوي الاحتياجات الاجتماعية", "items": [{"num": 44, "text": "تحليل ومعرفة الوضع الاجتماعي"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام", "count": 4, "criteria": [{"crit_num": 23, "crit_text": "تعزيز الحوكمة الرقمية", "items": [{"num": 55, "text": "عدد مستخدمي منصة الحوكمة الإلكترونية للمدينة/الحكومة المحلية"}, {"num": 56, "text": "تستخدم المدينة/الحكومة المحلية الحوكمة الإلكترونية لتقديم الخدمات الحكومية عبر الإنترنت للمواطنين والشركات والمنظمات الأخرى"}, {"num": 57, "text": "نسبة المعاملات أو الخدمات العامة التي يتم إنجازها أو توفيرها رقمياً"}, {"num": 58, "text": "عدد الأفراد المستفيدين من التدخلات الرامية إلى زيادة الثقافة الرقمية"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "count": 4, "criteria": [{"crit_num": 24, "crit_text": "وجود خطة تنمية حضرية طويلة الأمد تدمج أهداف الصحة والرفاه بالإضافة إلى أهداف التنمية الحضرية التي تسهم في خفض الكربون", "items": [{"num": 59, "text": "لدى المدينة القدرة على صياغة وتنفيذ خطة تنمية حضرية على مستوى المدينة بنطاق متعدد القطاعات"}, {"num": 60, "text": "اعتمدت المدينة خطة تنمية حضرية طويلة الأجل بنطاق متعدد القطاعات تدمج الصحة والتنمية الحضرية التي تسهم في خفض الكربون"}, {"num": 61, "text": "السلطات المحلية واللجنة الرئيسية للمدينة تُقيّم الأثر الصحي للمشاريع التنموية وتنفذ الحلول المناسبة"}, {"num": 62, "text": "يشارك المتطوعون ومنظمات المجتمع المدني في وضع الخطة وتحديد مقترحات التنمية"}]}]}, {"committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "count": 2, "criteria": [{"crit_num": 25, "crit_text": "تعزيز الاستخدام الفعال للأراضي لتقليل التأثير البيئي؛ يتم تحديد ومراقبة نسبة استهلاك الأراضي حسب معدل التحضر إلى معدل النمو السكاني", "items": [{"num": 63, "text": "الدعوة إلى توازن نسبة معدل \"استهلاك الأراضي بسبب التوسع الحضري\" إلى معدل \"النمو السكاني\""}, {"num": 64, "text": "وجود استراتيجية/خطة التنمية الحضرية تقدم دعماً سياسياً للتنمية الحضرية المتوازنة"}]}]}, {"committee": "اللجنة البيئية", "count": 43, "criteria": [{"crit_num": 26, "crit_text": "تعزيز الأسطح الحضرية المساهمة في التصدي للتغيرات المناخية", "items": [{"num": 65, "text": "يدعم التصميم الحضري ولوائح البناء في المدينة الأسطح الحضرية المقاومة للمناخ والتي تكون مظللة وعاكسة و/أو ماصة (المساحات الخضراء، أثاث الشوارع المزروع، عناصر البناء الخضراء (الأسقف/الجدران الخضراء))"}, {"num": 66, "text": "الأسطح المائية (الطبيعية، الاصطناعية)"}, {"num": 67, "text": "مواد الرصف ذات الألوان الفاتحة/المسامية"}, {"num": 68, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات التي تزيد من تغطية الأسطح الحضرية المقاومة للمناخ"}]}, {"crit_num": 27, "crit_text": "الدعوة إلى المباني الموفرة للطاقة", "items": [{"num": 69, "text": "يدعم قانون البناء التابع لسلطة المدينة بناء المباني المستدامة والمرنة باستخدام المواد المحلية"}, {"num": 70, "text": "الإجراءات التي تم تحديدها/بدءها/إكمالها لدعم البناء الجديد المستدام (على سبيل المثال مراجعة معايير الطاقة المستخدمة في المباني محلياً مثل LEED)"}, {"num": 71, "text": "تجربة المباني الموفرة للطاقة في القطاع العام"}, {"num": 72, "text": "عقد جلسات توعية/تدريب للصناعة والترويج للمباني الخضراء والصحية وتقنيات البناء المستدامة"}, {"num": 73, "text": "يدعم قانون البناء التابع لسلطة المدينة إعادة تأهيل المباني لتحسين استدامتها ومرونتها باستخدام المواد المحلية"}, {"num": 74, "text": "الإجراءات التي تم تحديدها/بدءها/إكمالها لدعم إعادة تأهيل المباني المستدامة (مراجعة الفرص والتحديات في المخزون المحلي للمباني)"}]}, {"crit_num": 35, "crit_text": "تعزيز الوصول إلى المياه الآمنة وبأسعار معقولة بما في ذلك تحسين كفاءة استخدام المياه", "items": [{"num": 106, "text": "يتم تحديد نسبة الأسر التي تستخدم خدمات مياه الشرب الآمنة ورسم خريطة مكانية لها (ويتم تضمينها في تحليل/ملف الحالة للمدينة)"}, {"num": 107, "text": "التدخلات التي يتم البدء بها و/أو تنفيذها لزيادة نسبة السكان الذين يستخدمون خدمات مياه الشرب الآمنة"}, {"num": 108, "text": "يتم رصد ومعرفة نسبة الهدر في استخدام المياه في المدينة وتحديد الفرص لتحسين كفاءة استخدام المياه (على سبيل المثال تقليل الخسائر الفنية في الشبكة)"}, {"num": 109, "text": "فرص إعادة استخدام مياه الصرف الصحي"}, {"num": 110, "text": "يتم تطبيق مبادرات تهدف لتغيير السلوك للحد من الاستهلاك غير المرشد للمياه"}, {"num": 111, "text": "التدخلات التي يتم البدء بها و/أو تنفيذها لزيادة كفاءة استخدام المياه"}]}, {"crit_num": 36, "crit_text": "تعزيز الصرف الصحي الملائم", "items": [{"num": 112, "text": "يتم تحديد نسبة السكان الذين يستخدمون: (أ) خدمات الصرف الصحي المُدارة بأمان (ب) مرافق غسل اليدين بالماء والصابون، ورسم خريطة مكانية لها"}]}, {"crit_num": 37, "crit_text": "تعزيز الإدارة الملائمة لمياه الصرف الصحي", "items": [{"num": 113, "text": "التدخلات التي تم البدء بها وتنفيذها لزيادة نسبة السكان الذين يستخدمون: (أ) خدمات الصرف الصحي المُدارة بأمان (ب) مرافق غسل اليدين بالماء والصابون"}, {"num": 114, "text": "يتم تحديد نسبة تدفقات مياه الصرف الصحي المنزلية والصناعية المعالجة بأمان ورسم خريطة مكانية لها (أي المصادر والمصارف)"}, {"num": 115, "text": "التدخلات التي تم البدء فيها/إكمالها لزيادة نسبة تدفقات مياه الصرف الصحي المعالجة بأمان"}]}, {"crit_num": 38, "crit_text": "تعزيز الإدارة الملائمة للنفايات الصلبة، بما في ذلك إعادة التدوير", "items": [{"num": 116, "text": "يتم تحديد النفايات الصلبة بالبلدية الناتجة للفرد الواحد، ونسبة الأسر التي تخدمها أنظمة إدارة النفايات الصلبة بالبلدية، ونسبة النفايات الصلبة بالبلدية المعاد تدويرها"}, {"num": 117, "text": "يتم تحديد نسبة وعدد الأسر التي تخدمها أنظمة إدارة النفايات الصلبة"}, {"num": 118, "text": "يتم تحديد نسبة وكمية النفايات الصلبة المعاد تدويرها"}, {"num": 119, "text": "يتم البدء في التدخلات التي تشجع الوعي العام والتغييرات السلوكية بما يتماشى مع الحد من وإعادة الاستخدام وإعادة التدوير والاسترداد و/أو تنفيذها"}]}, {"crit_num": 40, "crit_text": "تعزيز جودة الهواء المناسبة", "items": [{"num": 121, "text": "تقوم السلطة المسؤولة بإجراء مراقبة منتظمة لتلوث الهواء - يتم التعارف بمعايير جودة الهواء/الموافقة عليها"}, {"num": 122, "text": "وجود نظام إنذار مبكر لتلوث الهواء"}, {"num": 123, "text": "يتم إنتاج نموذج لجودة الهواء في المناطق الحضرية"}, {"num": 124, "text": "يحدد التركيزات المكانية لتلوث الهواء ومكوناته ومصادره (الاستفادة من بيانات منظمة الصحة العالمية في هذا الصدد)"}, {"num": 125, "text": "توجد خطة/سياسة للتنمية الحضرية للمدينة تعزز معايير جودة الهواء، بما في ذلك من خلال تحديد المواقع الحساسة للاستخدامات الملوثة (مثل الصناعة) في المدينة"}, {"num": 126, "text": "يتم البدء في التدخلات/الأنشطة الرامية إلى الحد من تلوث الهواء/إكمالها"}]}, {"crit_num": 41, "crit_text": "معالجة تلوث الهواء والضوضاء", "items": [{"num": 127, "text": "معدل قياس تلوث الهواء والضوضاء من قبل الجهة المختصة"}, {"num": 128, "text": "عدد التدخلات/الأنشطة للحد من تلوث الهواء والضوضاء"}, {"num": 129, "text": "تحديد موقع المناطق الصناعية داخل المدينة"}]}, {"crit_num": 42, "crit_text": "تعزيز الوصول الشامل إلى خدمات الطاقة الحديثة والموثوقة وبأسعار معقولة وزيادة نسبة مساهمة الطاقة المتجددة ضمن مصادر الطاقة", "items": [{"num": 130, "text": "يتم تحديد حصة الأسر التي لديها إمكانية الوصول إلى الكهرباء ورسم خريطة مكانية لها"}, {"num": 131, "text": "يتم تحديد/بدء/إكمال المبادرات على مستوى المدينة لزيادة حصة الأسر التي لديها إمكانية الوصول إلى الكهرباء"}, {"num": 132, "text": "يتم تحديد/بدء/إكمال المبادرات على مستوى المدينة لزيادة نسبة مساهمة الطاقة المتجددة ضمن مصادر الطاقة في المدينة (على سبيل المثال اعتماد البلدية لمصابيح الشوارع التي تعمل بالطاقة الشمسية، وأساطيل المركبات العامة التي تستخدم الطاقة الخضراء)"}, {"num": 133, "text": "يتم تحديد أهداف سياسة الطاقة المتجددة"}]}, {"crit_num": 43, "crit_text": "تعزيز أنظمة النقل المستدامة المتاحة للجميع", "items": [{"num": 134, "text": "تم إجراء مسح لأنظمة التنقل في المدينة لتحديد حصة الوسائط (نسبة المسافرين والكيلومترات التي قطعها الركاب باستخدام نوع معين من وسائل النقل، بما في ذلك السيارات الخاصة وسيارات الأجرة والنقل غير الآلي والتنقل النشط (المشي وركوب الدراجات) والنقل العام وما إلى ذلك)"}, {"num": 135, "text": "المبادرات (المشاريع/الخطط والاستراتيجيات) التي تم تحديدها/بدءها/إكمالها لتقليل استخدام السيارات من خلال تحسين جودة أنظمة النقل الأخرى القائمة على النقل العام وغير الآلي، و/أو التقدم نحو النقل المنخفض الكربون/النشط (مثل النقل العام الأخضر؛ مخطط الدراجات في المدينة؛ المناطق الخالية من السيارات/المنخفضة الانبعاثات؛ التدخلات التصميمية المؤيدة للمشاة وركوب الدراجات؛ أنظمة ركن السيارات والركوب)"}]}, {"crit_num": 44, "crit_text": "تعزيز الوصول الشامل إلى المساحات الخضراء والعامة الآمنة والشاملة والمتاحة للجميع", "items": [{"num": 136, "text": "يتم مسح الأراضي الحضرية فيما يتعلق بقياس ورسم بعض أو كل ما يلي: حصة المنطقة غير المبنية داخل حدود المدينة، وحصة المنطقة المبنية التي تُعد مساحة مفتوحة للاستخدام العام من قبل الجميع، وحصة المنطقة المبنية التي تحتوي على غطاء أخضر (البنية التحتية الخضراء الحضرية بما في ذلك المناطق الطبيعية وشبه الطبيعية والمتنزهات والحدائق والأسطح الخضراء والنباتات على جوانب الشوارع)، والمساحة الخضراء للفرد الواحد"}, {"num": 137, "text": "إدراج الترويج للمساحات المفتوحة والخضراء في خطة التنمية الحضرية للمدينة"}, {"num": 138, "text": "يتم تحديد المبادرات/البدء فيها/إكمالها لزيادة المساحات المفتوحة/العامة و/أو حماية المعرضين للخطر"}]}, {"crit_num": 45, "crit_text": "تعزيز الوصول إلى المرافق الرياضية والترفيهية (خارج الأماكن العامة)", "items": [{"num": 139, "text": "يتم تحديد هذه الأماكن أو المماشي"}]}]}, {"committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "count": 2, "criteria": [{"crit_num": 28, "crit_text": "تعزيز التصميم الحضري الشامل", "items": [{"num": 75, "text": "تقدم المدينة أدلة مستندية حول كيفية دمج عمليات التخطيط الحضري ونتائجه لحق المجموعات المهمشة أو القاطنين في حواشي المدينة"}, {"num": 76, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات الداعمة لحق المجموعات المهمشة أو القاطنين في حواشي المدينة"}]}]}, {"committee": "اللجنة الأمنية والطوارئ", "count": 16, "criteria": [{"crit_num": 29, "crit_text": "الحد من الجريمة / الخوف من الوقوع في الجريمة وانعدام الأمان من خلال التصميم الحضري", "items": [{"num": 77, "text": "يتم قياس معدل وقوع الجريمة/السلوك المعادي للمجتمع وحوادث الطرق ورسم خرائط مكانية لها بشكل مستمر"}, {"num": 78, "text": "يتم مراقبة الأمان (على مستوى الشارع، في وسائل النقل العام) ورسم خرائط مكانية له (حسب المجموعة الديموغرافية)"}, {"num": 79, "text": "يتم تحديد/بدء/إكمال مبادرات التصميم الحضري بهدف الحد/تقليل الجريمة/الخوف من الجريمة وحوادث المرور، على سبيل المثال إنارة الشوارع، والمساحات، و\"المراقبة الطبيعية\" من المباني المواجهة للخارج، والأرصفة والمعابر المخصصة للمشاة، وممرات الدراجات المخصصة وما إلى ذلك"}]}, {"crit_num": 32, "crit_text": "معالجة الحوادث والجرائم والعنف", "items": [{"num": 90, "text": "عدد الوفيات السنوية بسبب حوادث المرور (حسب الجنس والفئة العمرية)"}, {"num": 91, "text": "تكييف حدود السرعة الوطنية على مستوى المدينة"}, {"num": 92, "text": "معدل ارتداء حزام الأمان"}, {"num": 93, "text": "معدل ارتداء خوذة الدراجة النارية"}, {"num": 94, "text": "عدد/نسبة الجرائم"}, {"num": 95, "text": "نسبة وعدد الأطفال الذين تتراوح أعمارهم بين 5 و17 عاماً المنخرطين في عمالة الأطفال، حسب الجنس والعمر"}]}, {"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 99, "text": "عدد ضحايا القتل العمد (حسب الجنس والعمر)"}, {"num": 100, "text": "عدد حالات الانتحار"}]}, {"crit_num": 62, "crit_text": "تعزيز الخدمات العامة المحلية والقدرة على التعامل مع حالات الطوارئ الصحية العامة وتغير المناخ، فضلاً عن الكوارث الطبيعية والبشرية", "items": [{"num": 209, "text": "يعرف المجتمع خطة الطوارئ، وما يجب القيام به، ومن يجب الإبلاغ إليه، ومن سيفعل ماذا أثناء حالة الطوارئ"}]}, {"crit_num": 63, "crit_text": "تعزيز قدرة المجتمع على الصمود والاستجابة في حالة حدوث طوارئ", "items": [{"num": 210, "text": "يتم تحديث خطط التواصل بشأن المخاطر وإشراك المجتمع"}, {"num": 211, "text": "يتم تدريب اللجنة الفرعية للاستعداد للطوارئ والاستجابة لها والمتطوعين على خطط الاستعداد للطوارئ، وكيفية التعامل مع حالات الطوارئ وتوفير الإسعافات الأولية عندما وأينما تكون مطلوبة"}, {"num": 212, "text": "يتم عمل تمارين الإخلاء/المحاكاة بصورة دورية"}]}, {"crit_num": 65, "crit_text": "فهم جميع جوانب نقاط الضعف في المدينة والتصرف بشأنها", "items": [{"num": 215, "text": "تتوفر خطط الإخلاء للتعامل مع المجموعات المعرضة للخطر (بما في ذلك أماكن الإخلاء، وأنواع الإمدادات، وما إلى ذلك)"}]}]}, {"committee": "اللجنة البيئية وإدارة المدن الصحية والمنسق العام", "count": 1, "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 80, "text": "تطبيق مبادرة المدينة صديقة البيئة"}]}]}, {"committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "count": 4, "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 81, "text": "تطبيق مبادرة أماكن العمل الصحية"}, {"num": 82, "text": "تطبيق مبادرة المجمعات التجارية وأماكن التسوق المعززة للصحة"}, {"num": 83, "text": "تطبيق مبادرة السجون الصحية"}, {"num": 85, "text": "تطبيق مبادرة الجامعات المعززة للصحة"}]}]}, {"committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية والمنسق العام", "count": 1, "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 84, "text": "تطبيق مبادرة المؤسسات الصحية المراعية لفئات المجتمع (كبار السن، ذوي الاحتياجات الخاصة)"}]}]}, {"committee": "اللجنة الصحية", "count": 49, "criteria": [{"crit_num": 31, "crit_text": "تطبيق أماكن خالية من التدخين والنيكوتين", "items": [{"num": 86, "text": "نسبة المناطق الخالية من التدخين والنيكوتين كما ورد في اتفاقية منظمة الصحة العالمية الإطارية بشأن مكافحة التبغ (FCTC)، مثل: نسبة الأماكن الحكومية، ووسائل النقل العام، والمطاعم والمقاهي، والمرافق الحكومية، ومرافق الرعاية الصحية، والمرافق التعليمية الخالية من التدخين والنيكوتين"}, {"num": 87, "text": "حظر عرض منتجات التبغ والنيكوتين في نقاط البيع"}, {"num": 88, "text": "حظر تمويل شركات التبغ أو تقديم مساهمات (بما في ذلك المساهمات العينية) لحملات وسائل الإعلام للوقاية من التدخين والنيكوتين، بما في ذلك تلك الموجهة للشباب"}, {"num": 89, "text": "رفع الضرائب على التبغ"}]}, {"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 96, "text": "نسبة أسرّة الصحة النفسية والعقلية في المستشفيات إلى إجمالي الأسرّة في المستشفيات"}]}, {"crit_num": 46, "crit_text": "تعزيز النشاط البدني والحياة النشطة للأشخاص في جميع الفئات العمرية", "items": [{"num": 143, "text": "نسبة الخمول البدني حسب الفئات العمرية"}]}, {"crit_num": 47, "crit_text": "معالجة السمنة لدى الشباب والبالغين", "items": [{"num": 144, "text": "عدد الأنشطة التي تعالج السمنة لدى الشباب والبالغين"}, {"num": 145, "text": "نسبة الوزن الزائد حسب الفئات العمرية"}, {"num": 146, "text": "نسبة السمنة حسب الفئات العمرية"}]}, {"crit_num": 49, "crit_text": "تعزيز صحة الأطفال دون سن 5 سنوات", "items": [{"num": 150, "text": "عدد وفيات الأطفال حديثي الولادة"}, {"num": 151, "text": "عدد وفيات الرضع"}, {"num": 152, "text": "توزيع أسباب وفيات الرضع"}, {"num": 153, "text": "عدد الوفيات بين الأطفال دون سن الخامسة"}, {"num": 154, "text": "توزيع أسباب الوفاة بين الأطفال دون سن الخامسة"}, {"num": 155, "text": "نسبة الأطفال الذين تم تحصينهم بالكامل ضد الأمراض التي يمكن الوقاية منها باللقاحات (حسب العمر المستهدف واللقاحات الموصى بها)"}, {"num": 156, "text": "نسبة الأطفال دون سن الخامسة الذين يمكنهم الوصول إلى خدمات الرعاية الصحية (بما في ذلك مراقبة النمو) ويتلقونها بانتظام"}, {"num": 157, "text": "معدل الرضاعة الطبيعية المطلقة (لمدة 6 أشهر)"}, {"num": 158, "text": "معدل سوء التغذية لدى الأطفال دون سن الخامسة (الهزال، التقزم، زيادة الوزن، السمنة)"}, {"num": 159, "text": "عدد الأطفال الذين تتراوح أعمارهم بين 6 و59 شهراً والذين يعانون من فقر الدم"}, {"num": 160, "text": "نسبة الأطفال الذين يعانون من سوء التغذية والذين يعانون من نقص فيتامين أ وفقر الدم الناجم عن نقص الحديد والذين تم تحديدهم ويتلقون العلاج والرعاية والمتابعة"}]}, {"crit_num": 52, "crit_text": "تعزيز صحة المراهقين والشباب", "items": [{"num": 173, "text": "المبادرات التي تهتم بصحة المراهقين والشباب ورفاهيتهم الاجتماعية وحمايتهم (على سبيل المثال مبادرات مكافحة التدخين والنيكوتين والإدمان وما إلى ذلك)"}]}, {"crit_num": 53, "crit_text": "تعزيز صحة المرأة في سن الإنجاب", "items": [{"num": 174, "text": "نسبة النساء الحوامل اللاتي حصلن على رعاية ما قبل الولادة في الوقت المناسب (4 زيارات على الأقل)"}, {"num": 175, "text": "عدد النساء الحوامل اللاتي تتراوح أعمارهن بين 15 و49 عاماً ويعانين من فقر الدم"}, {"num": 176, "text": "نسبة النساء الحوامل اللاتي يعانين من فقر الدم الناجم عن نقص الحديد وتم تشخيصهن ويتلقين العلاج والرعاية والمتابعة"}, {"num": 177, "text": "حصول النساء الحوامل على بيئة ولادة آمنة ونظيفة"}, {"num": 178, "text": "نسبة الولادات التي تتم تحت إشراف كادر صحي مدرب"}, {"num": 179, "text": "عدد النساء الحوامل المصابات بفيروس نقص المناعة البشرية اللاتي تلقين العلاج لمنع انتقال العدوى من الأم إلى الطفل"}, {"num": 180, "text": "نسبة الأمهات اللاتي حصلن على رعاية ما بعد الولادة في الوقت المناسب"}, {"num": 181, "text": "تغطية الفحص والكشف المبكر عن سرطان الثدي وعنق الرحم"}, {"num": 182, "text": "نسبة النساء في سن الإنجاب (15-49 عاماً) اللاتي تم تلبية احتياجاتهن إلى تنظيم الأسرة بالطرق الحديثة"}]}, {"crit_num": 54, "crit_text": "الوقاية من الأمراض غير المعدية والسيطرة عليها", "items": [{"num": 183, "text": "انتشار مرض السكري حسب الفئات العمرية"}, {"num": 184, "text": "انتشار ارتفاع ضغط الدم حسب الفئات العمرية"}, {"num": 185, "text": "انتشار الربو حسب الفئات العمرية"}, {"num": 186, "text": "تغطية برامج فحص السرطان"}, {"num": 187, "text": "عدد الوفيات المنسوبة إلى الأمراض غير المعدية"}, {"num": 188, "text": "انتشار استخدام التبغ الحالي حسب العمر بين الأشخاص الذين تبلغ أعمارهم 15 عاماً فأكثر"}, {"num": 189, "text": "عدد عيادات \"الإقلاع عن التدخين والنيكوتين\""}]}, {"crit_num": 58, "crit_text": "ضمان الوصول إلى الخدمات الصحية", "items": [{"num": 197, "text": "التغطية الصحية الشاملة من حيث الوصول والتكلفة والجودة"}, {"num": 198, "text": "نسبة السكان المشمولين ببرامج التأمين (مثل التأمين الصحي الاجتماعي، والتأمين الصحي الخاص، والخدمات الصحية الحكومية المجانية، وما إلى ذلك) حسب الجنسية والجنس والفئة العمرية والحالة الوظيفية والظروف الصحية والاجتماعية (مثل الحوامل، والمعاقين، والفقراء، وما إلى ذلك)"}, {"num": 199, "text": "نسبة السكان المشمولين بحزمة الخدمات الصحية الأساسية"}, {"num": 200, "text": "الأدوية الأساسية واللقاحات والأدوات الطبية (وفقاً لاحتياجات النظام الصحي المحلي) متوفرة في المرافق الصحية"}]}, {"crit_num": 59, "crit_text": "ضمان تغطية السكان بالخدمات الصحية والاجتماعية", "items": [{"num": 201, "text": "وجود برامج وخدمات ذات جودة لتعزيز الصحة النفسية والعقلية"}, {"num": 202, "text": "المرافق الصحية التي تلتزم بمؤشرات الجودة الوطنية وسلامة المرضى"}, {"num": 203, "text": "عدد المرافق الصحية التي تتبنى مبادرة \"المؤسسات الصحية صديقة للمرضى\""}, {"num": 204, "text": "المرافق الصحية التي تحصل على شهادات الاعتماد الوطنية"}, {"num": 205, "text": "تقارير سنوية عن رضا متلقي الرعاية ومقدمي الرعاية"}, {"num": 206, "text": "يتم تقييم التفاعلات بين مقدمي الرعاية الصحية والمجتمع ويتم اتخاذ الإجراءات وفقاً لذلك"}]}, {"crit_num": 60, "crit_text": "تحسين جودة الخدمات وسلامتها لتلبية احتياجات وتوقعات مكونات وفئات المجتمع المختلفة", "items": [{"num": 207, "text": "نظام إحالة فعال مع مسارات واضحة للمرضى"}]}, {"crit_num": 64, "crit_text": "تطوير أنظمة مراقبة شاملة واستباقية أثناء الأزمات", "items": [{"num": 213, "text": "وجود نظام استباقي لمراقبة الأمراض والطوارئ والإنذار المبكر لها"}]}]}, {"committee": "اللجنة الصحية واللجنة الأمنية والطوارئ", "count": 2, "criteria": [{"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 98, "text": "نسبة الاستخدام الضار للكحول والمخدرات"}]}, {"crit_num": 62, "crit_text": "تعزيز الخدمات العامة المحلية والقدرة على التعامل مع حالات الطوارئ الصحية العامة وتغير المناخ، فضلاً عن الكوارث الطبيعية والبشرية", "items": [{"num": 208, "text": "توافر خطة للحد من مخاطر الكوارث في المدينة، والاستعداد للطوارئ والاستجابة لها والتعافي منها (بما في ذلك حالات تفشي الأوبئة) بما يتماشى مع خطط الحد من مخاطر الكوارث والاستجابة لها على المستوى الوطني، ويتم توصيل الخطة إلى جميع أصحاب العلاقة والشركاء في المدينة"}]}]}, {"committee": "اللجنة الصحية واللجنة البيئية", "count": 1, "criteria": [{"crit_num": 39, "crit_text": "تعزيز الإدارة الآمنة للنفايات الطبية", "items": [{"num": 120, "text": "الإدارة والمعالجة الآمنة للنفايات الطبية"}]}]}, {"committee": "اللجنة البيئية واللجنة الصحية", "count": 1, "criteria": [{"crit_num": 45, "crit_text": "تعزيز الوصول إلى المرافق الرياضية والترفيهية (خارج الأماكن العامة)", "items": [{"num": 140, "text": "وجود مبادرات لتعزيز النشاط البدني وممارسة الرياضة، مثل اشتراك مخفض للنوادي والصالات الرياضية أو في المولات الصحية"}]}]}, {"committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية", "count": 1, "criteria": [{"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 147, "text": "توافر وجبات صحية في أماكن العمل والمدارس والجامعات وأماكن التسوق"}]}]}, {"committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية واللجنة الإعلامية", "count": 1, "criteria": [{"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 148, "text": "يتم عمل أنشطة توعية للمجتمع وأولياء الأمور"}]}]}, {"committee": "اللجنة التعليمية", "count": 6, "criteria": [{"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 164, "text": "نسبة الأطفال المسجلين في سن المدرسة"}, {"num": 165, "text": "معدلات التسرب"}, {"num": 167, "text": "المدارس لديها سجلات لجودة التعليم"}, {"num": 169, "text": "يتم تطبيق سياسة المدارس خالية من العنف والتنمر"}, {"num": 172, "text": "دمج الأطفال ذوي الاحتياجات الخاصة"}]}, {"crit_num": 56, "crit_text": "ضمان التعليم للبالغين الأميين", "items": [{"num": 191, "text": "نسبة الأمية بين البالغين"}]}]}, {"committee": "اللجنة التعليمية واللجنة الصحية", "count": 3, "criteria": [{"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 166, "text": "نسبة المدارس التي تتبنى مبادرة المدارس المعززة للصحة"}, {"num": 168, "text": "الصحة المدرسية والفحص الدوري للطلاب"}, {"num": 170, "text": "يتم تطبيق سياسة المدارس خالية من التدخين والنيكوتين"}]}]}, {"committee": "اللجنة التعليمية واللجنة البيئية", "count": 1, "criteria": [{"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 171, "text": "بيئة المدرسة والكافيتيريا"}]}]}, {"committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "count": 1, "criteria": [{"crit_num": 55, "crit_text": "جعل المدينة مراعية لكبار السن", "items": [{"num": 190, "text": "تطبيق معايير منظمة الصحة العالمية للمدن المراعية لكبار السن، والتي تشمل النقل والخدمات والإدماج المجتمعي"}]}]}, {"committee": "اللجنة الأمنية والطوارئ واللجنة الصحية", "count": 1, "criteria": [{"crit_num": 65, "crit_text": "فهم جميع جوانب نقاط الضعف في المدينة والتصرف بشأنها", "items": [{"num": 214, "text": "يتم رسم خريطة للمجموعات المعرضة للخطر (مثل النساء الحوامل، والأشخاص ذوي الإعاقة، والمرضى المصابين بأمراض مزمنة، وكبار السن، والأشخاص الذين يعانون من اضطرابات عقلية، وما إلى ذلك)"}]}]}, {"committee": "المنسق العام للمدينة الصحية واللجنة المالية", "count": 4, "criteria": [{"crit_num": 66, "crit_text": "تعزيز المساءلة المالية", "items": [{"num": 216, "text": "تم فتح/تخصيص حساب مصرفي رسمي للمدينة الصحية (أو تدابير بديلة أخرى وفقاً للوائح الحكومية) ويتم الاحتفاظ بجميع المعاملات المالية وتوثيقها"}]}, {"crit_num": 67, "crit_text": "إشراك القطاع الخاص في دعم موارد حركة المدن الصحية في المدينة", "items": [{"num": 217, "text": "عدد المؤسسات/الشركات/مراكز الأعمال الخاصة المشاركة في تمويل/دعم مبادرات المدينة الصحية العينية"}]}, {"crit_num": 68, "crit_text": "حشد الموارد بصورة مستمرة للمدينة الصحية", "items": [{"num": 219, "text": "عدد المشاريع أو المبادرات التي تم إعدادها وتسليمها للجهات المتبرعة"}, {"num": 220, "text": "تم صياغة استراتيجية الميزانية طويلة الأجل لتوفير الموارد"}]}]}, {"committee": "المنسق العام للمدينة الصحية واللجنة المالية وإدارة المدن الصحية", "count": 1, "criteria": [{"crit_num": 68, "crit_text": "حشد الموارد بصورة مستمرة للمدينة الصحية", "items": [{"num": 218, "text": "تم تدريب اللجنة الفرعية المالية التابعة للجنة المدينة الصحية (أو قطاعات الحكومة المحلية) على تعبئة الموارد/جمع الأموال"}]}]}];
+</script>
+<script>
+const CHARTERS = [{"committee": "اللجنة الرئيسية", "total_count": 36, "axes": [{"name": "المحور الأول: التأسيس والحوكمة المؤسسية", "desc": "تشكيل الهيكل التنظيمي للمدينة الصحية، وتحليل الوضع الراهن، وتحديد أصحاب العلاقة، وبناء الاستراتيجية، ومتابعة التنفيذ وتوليد الأدلة.", "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 3, "text": "التمثيل العادل لفئات المجتمع ضمن اللجان (حيث تضمن العضوية مجموعات ممثلة للنساء، الشباب، ذوي الإعاقة، كبار السن، رجال الأعمال ....إلخ)", "full_committee": "(اللجنة التنسيقية) اللجنة الرئيسية", "joint": true}]}, {"crit_num": 3, "crit_text": "تحليل شامل للوضع (بما في ذلك تحليل السبب الجذري) يتم تنفيذه من قبل اللجنة الرئيسية للمدينة الصحية واللجان الفرعية", "items": [{"num": 6, "text": "وجود تحليل شامل للوضع الراهن", "full_committee": "اللجنة الرئيسية واللجان الفرعية", "joint": true}]}, {"crit_num": 4, "crit_text": "تم إجراء تحديد أصحاب العلاقة وتحليل اهتماماتهم", "items": [{"num": 8, "text": "قائمة بجميع أصحاب العلاقة المحتملين وتحليلهم (الدور، الاهتمام، التأثير، وما إلى ذلك متاح)", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 5, "crit_text": "إعداد ملف/مرتسم المدينة الصحية", "items": [{"num": 9, "text": "تم إعداد ملف تعريفي للمدينة الصحية وتحديثه واستخدامه لأغراض التخطيط والمتابعة والتسويق", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 10, "text": "مشاركة لجان المدينة الصحية وأصحاب العلاقة والشركاء في اعداد الملف", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 6, "crit_text": "إعداد استراتيجية وخطة تنمية متعددة القطاعات للمدينة الصحية", "items": [{"num": 11, "text": "تم استخدام المعلومات والنتائج التي تم الحصول عليها في تحليل الوضع الراهن للتخطيط لأنشطة ومشاريع المدينة الصحية", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 7, "crit_text": "متابعة وتقييم وتوثيق تدخلات المدينة الصحية", "items": [{"num": 13, "text": "يتم توثيق التجارب والتقدم المحرز", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 14, "text": "تم تحديد أولويات البحوث والدراسات الخاصة بالمدينة الصحية", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 8, "crit_text": "تعزيز البحث وتوليد الأدلة وتمكين المعرفة", "items": [{"num": 15, "text": "عدد المعاهد البحثية والأكاديمية المشاركة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 16, "text": "دليل على مشاركة المجتمع في البحث وتجميع الأدلة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 17, "text": "عدد الأبحاث التي أجريت", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 18, "text": "عدد الأبحاث المنشورة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 19, "text": "عدد ملخصات السياسات التي تم إعدادها", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 20, "text": "عدد الحوارات التي أجريت مع أصحاب القرار", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 21, "text": "عدد مؤتمرات/منتديات المدينة الصحية التي أجريت", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}], "count": 15}, {"name": "المحور الثاني: السياسات والشراكات الصحية", "desc": "دمج الصحة ضمن جميع السياسات القطاعية، وتعزيز القيادة الفاعلة، وقياس الإنصاف الصحي بين فئات المجتمع.", "criteria": [{"crit_num": 10, "crit_text": "تم إدراج الصحة في جميع السياسات وتعزيز الدبلوماسية الصحية من خلال التعاون والتنسيق بين القطاعات الحكومية والشركاء الفاعلين", "items": [{"num": 27, "text": "عدد مذكرات التعاون الموقعة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 28, "text": "عدد خطط العمل المشترك مع الشركاء وأصحاب العلاقة (بما في ذلك المؤسسات الأكاديمية والمعاهد البحثية)", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 29, "text": "عدد السياسات/الاستراتيجيات/الخطط التي تعالج أو تدمج الصحة والمحددات الاجتماعية للصحة وتتماشى بشكل كامل مع أهداف التنمية المستدامة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 11, "crit_text": "تعزيز الوعي وتنمية المهارات لأجل قيادة فاعلة", "items": [{"num": 30, "text": "عدد أنشطة التدريب على القيادة وبناء القدرات التي تستهدف إعداد القادة بما في ذلك الصف الثاني", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 31, "text": "عدد الدورات التدريبية في مجال تقييم الأثر الصحي", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}, {"num": 32, "text": "عدد دراسات تقييم الأثر الصحي التي أجريت في المدينة الصحية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 16, "crit_text": "تعزيز القيادة المحلية المسؤولة والمستجيبة للمدن", "items": [{"num": 36, "text": "نسبة السكان الراضين عن تجربتهم الأخيرة في التعامل مع الخدمات العامة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 37, "text": "وجود ميزانية في الحكومة المحلية للإنفاق على الخدمات العامة وبحسب القطاع", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}]}], "count": 9}, {"name": "المحور الثالث: التخطيط الحضري والحوكمة الرقمية", "desc": "الإشراف على خطط التنمية الحضرية طويلة الأمد، واستخدام الأراضي، والتصميم الحضري الشامل، وتفعيل الحوكمة الإلكترونية.", "criteria": [{"crit_num": 23, "crit_text": "تعزيز الحوكمة الرقمية", "items": [{"num": 55, "text": "عدد مستخدمي منصة الحوكمة الإلكترونية للمدينة/الحكومة المحلية", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 56, "text": "تستخدم المدينة/الحكومة المحلية الحوكمة الإلكترونية لتقديم الخدمات الحكومية عبر الإنترنت للمواطنين والشركات والمنظمات الأخرى", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 57, "text": "نسبة المعاملات أو الخدمات العامة التي يتم إنجازها أو توفيرها رقمياً", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 58, "text": "عدد الأفراد المستفيدين من التدخلات الرامية إلى زيادة الثقافة الرقمية", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}]}, {"crit_num": 24, "crit_text": "وجود خطة تنمية حضرية طويلة الأمد تدمج أهداف الصحة والرفاه بالإضافة إلى أهداف التنمية الحضرية التي تسهم في خفض الكربون", "items": [{"num": 59, "text": "لدى المدينة القدرة على صياغة وتنفيذ خطة تنمية حضرية على مستوى المدينة بنطاق متعدد القطاعات", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 60, "text": "اعتمدت المدينة خطة تنمية حضرية طويلة الأجل بنطاق متعدد القطاعات تدمج الصحة والتنمية الحضرية التي تسهم في خفض الكربون", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 61, "text": "السلطات المحلية واللجنة الرئيسية للمدينة تُقيّم الأثر الصحي للمشاريع التنموية وتنفذ الحلول المناسبة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 62, "text": "يشارك المتطوعون ومنظمات المجتمع المدني في وضع الخطة وتحديد مقترحات التنمية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}]}, {"crit_num": 25, "crit_text": "تعزيز الاستخدام الفعال للأراضي لتقليل التأثير البيئي؛ يتم تحديد ومراقبة نسبة استهلاك الأراضي حسب معدل التحضر إلى معدل النمو السكاني", "items": [{"num": 63, "text": "الدعوة إلى توازن نسبة معدل \"استهلاك الأراضي بسبب التوسع الحضري\" إلى معدل \"النمو السكاني\"", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 64, "text": "وجود استراتيجية/خطة التنمية الحضرية تقدم دعماً سياسياً للتنمية الحضرية المتوازنة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 28, "crit_text": "تعزيز التصميم الحضري الشامل", "items": [{"num": 75, "text": "تقدم المدينة أدلة مستندية حول كيفية دمج عمليات التخطيط الحضري ونتائجه لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 76, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات الداعمة لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}]}], "count": 12}]}, {"committee": "المنسق العام للمدينة الصحية", "total_count": 49, "axes": [{"name": "المحور الأول: التنسيق المؤسسي وإدارة الاجتماعات", "desc": "تنظيم اجتماعات اللجان، وتوثيق محاضرها، وتحليل الوضع الراهن، ومتابعة التقارير والمؤشرات.", "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 2, "text": "تحديد وتشكيل اللجان الفرعية اللازمة", "full_committee": "المنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 2, "crit_text": "تجتمع لجنة المدينة الصحية واللجان الفرعية بشكل منتظم", "items": [{"num": 5, "text": "تتوفر محاضر الاجتماعات مع الأجندة وجدول أعمال واضح وكذلك الإجراءات المتخذة", "full_committee": "المنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 3, "crit_text": "تحليل شامل للوضع (بما في ذلك تحليل السبب الجذري) يتم تنفيذه من قبل اللجنة الرئيسية للمدينة الصحية واللجان الفرعية", "items": [{"num": 7, "text": "استخدام عدة أدوات وأساليب في تحليل الوضع الراهن (مثل التحليل الرباعي، تحليل جذور المشكلة، نظام الخرائط الجغرافي، استخدام البيانات والاحصاءات من جهات معتمدة من الدولة)", "full_committee": "المنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 4, "crit_text": "تم إجراء تحديد أصحاب العلاقة وتحليل اهتماماتهم", "items": [{"num": 8, "text": "قائمة بجميع أصحاب العلاقة المحتملين وتحليلهم (الدور، الاهتمام، التأثير، وما إلى ذلك متاح)", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 5, "crit_text": "إعداد ملف/مرتسم المدينة الصحية", "items": [{"num": 9, "text": "تم إعداد ملف تعريفي للمدينة الصحية وتحديثه واستخدامه لأغراض التخطيط والمتابعة والتسويق", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 10, "text": "مشاركة لجان المدينة الصحية وأصحاب العلاقة والشركاء في اعداد الملف", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 6, "crit_text": "إعداد استراتيجية وخطة تنمية متعددة القطاعات للمدينة الصحية", "items": [{"num": 11, "text": "تم استخدام المعلومات والنتائج التي تم الحصول عليها في تحليل الوضع الراهن للتخطيط لأنشطة ومشاريع المدينة الصحية", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 7, "crit_text": "متابعة وتقييم وتوثيق تدخلات المدينة الصحية", "items": [{"num": 12, "text": "وجود نظام للمتابعة والتقييم \"عدد التقارير\"", "full_committee": "المنسق العام للمدينة الصحية", "joint": true}, {"num": 13, "text": "يتم توثيق التجارب والتقدم المحرز", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 14, "text": "تم تحديد أولويات البحوث والدراسات الخاصة بالمدينة الصحية", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}, {"crit_num": 8, "crit_text": "تعزيز البحث وتوليد الأدلة وتمكين المعرفة", "items": [{"num": 15, "text": "عدد المعاهد البحثية والأكاديمية المشاركة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 16, "text": "دليل على مشاركة المجتمع في البحث وتجميع الأدلة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 17, "text": "عدد الأبحاث التي أجريت", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 18, "text": "عدد الأبحاث المنشورة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 19, "text": "عدد ملخصات السياسات التي تم إعدادها", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 20, "text": "عدد الحوارات التي أجريت مع أصحاب القرار", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 21, "text": "عدد مؤتمرات/منتديات المدينة الصحية التي أجريت", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام للمدينة الصحية", "joint": true}]}], "count": 17}, {"name": "المحور الثاني: متابعة السياسات والشراكات الصحية", "desc": "متابعة إدراج الصحة في السياسات، وبناء قدرات القيادة، وتقييم الأثر الصحي والإنصاف.", "criteria": [{"crit_num": 10, "crit_text": "تم إدراج الصحة في جميع السياسات وتعزيز الدبلوماسية الصحية من خلال التعاون والتنسيق بين القطاعات الحكومية والشركاء الفاعلين", "items": [{"num": 27, "text": "عدد مذكرات التعاون الموقعة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 28, "text": "عدد خطط العمل المشترك مع الشركاء وأصحاب العلاقة (بما في ذلك المؤسسات الأكاديمية والمعاهد البحثية)", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 29, "text": "عدد السياسات/الاستراتيجيات/الخطط التي تعالج أو تدمج الصحة والمحددات الاجتماعية للصحة وتتماشى بشكل كامل مع أهداف التنمية المستدامة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 11, "crit_text": "تعزيز الوعي وتنمية المهارات لأجل قيادة فاعلة", "items": [{"num": 30, "text": "عدد أنشطة التدريب على القيادة وبناء القدرات التي تستهدف إعداد القادة بما في ذلك الصف الثاني", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 31, "text": "عدد الدورات التدريبية في مجال تقييم الأثر الصحي", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}, {"num": 32, "text": "عدد دراسات تقييم الأثر الصحي التي أجريت في المدينة الصحية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 16, "crit_text": "تعزيز القيادة المحلية المسؤولة والمستجيبة للمدن", "items": [{"num": 36, "text": "نسبة السكان الراضين عن تجربتهم الأخيرة في التعامل مع الخدمات العامة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}, {"num": 37, "text": "وجود ميزانية في الحكومة المحلية للإنفاق على الخدمات العامة وبحسب القطاع", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية", "joint": true}]}], "count": 9}, {"name": "المحور الثالث: التخطيط الحضري والحوكمة الرقمية", "desc": "متابعة خطط التنمية الحضرية، واستخدام الأراضي، والتصميم الحضري الشامل، والحوكمة الإلكترونية.", "criteria": [{"crit_num": 23, "crit_text": "تعزيز الحوكمة الرقمية", "items": [{"num": 55, "text": "عدد مستخدمي منصة الحوكمة الإلكترونية للمدينة/الحكومة المحلية", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 56, "text": "تستخدم المدينة/الحكومة المحلية الحوكمة الإلكترونية لتقديم الخدمات الحكومية عبر الإنترنت للمواطنين والشركات والمنظمات الأخرى", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 57, "text": "نسبة المعاملات أو الخدمات العامة التي يتم إنجازها أو توفيرها رقمياً", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}, {"num": 58, "text": "عدد الأفراد المستفيدين من التدخلات الرامية إلى زيادة الثقافة الرقمية", "full_committee": "اللجنة الرئيسية والمنسق العام", "joint": true}]}, {"crit_num": 24, "crit_text": "وجود خطة تنمية حضرية طويلة الأمد تدمج أهداف الصحة والرفاه بالإضافة إلى أهداف التنمية الحضرية التي تسهم في خفض الكربون", "items": [{"num": 59, "text": "لدى المدينة القدرة على صياغة وتنفيذ خطة تنمية حضرية على مستوى المدينة بنطاق متعدد القطاعات", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 60, "text": "اعتمدت المدينة خطة تنمية حضرية طويلة الأجل بنطاق متعدد القطاعات تدمج الصحة والتنمية الحضرية التي تسهم في خفض الكربون", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 61, "text": "السلطات المحلية واللجنة الرئيسية للمدينة تُقيّم الأثر الصحي للمشاريع التنموية وتنفذ الحلول المناسبة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 62, "text": "يشارك المتطوعون ومنظمات المجتمع المدني في وضع الخطة وتحديد مقترحات التنمية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}]}, {"crit_num": 25, "crit_text": "تعزيز الاستخدام الفعال للأراضي لتقليل التأثير البيئي؛ يتم تحديد ومراقبة نسبة استهلاك الأراضي حسب معدل التحضر إلى معدل النمو السكاني", "items": [{"num": 63, "text": "الدعوة إلى توازن نسبة معدل \"استهلاك الأراضي بسبب التوسع الحضري\" إلى معدل \"النمو السكاني\"", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 64, "text": "وجود استراتيجية/خطة التنمية الحضرية تقدم دعماً سياسياً للتنمية الحضرية المتوازنة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 28, "crit_text": "تعزيز التصميم الحضري الشامل", "items": [{"num": 75, "text": "تقدم المدينة أدلة مستندية حول كيفية دمج عمليات التخطيط الحضري ونتائجه لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 76, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات الداعمة لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}]}], "count": 12}, {"name": "المحور الرابع: تفعيل المبادرات الصحية المكانية", "desc": "الإشراف على تنفيذ مبادرات الأماكن الصحية (أماكن العمل، الجامعات، المجمعات التجارية، السجون).", "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 80, "text": "تطبيق مبادرة المدينة صديقة البيئة", "full_committee": "اللجنة البيئية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 81, "text": "تطبيق مبادرة أماكن العمل الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 82, "text": "تطبيق مبادرة المجمعات التجارية وأماكن التسوق المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 83, "text": "تطبيق مبادرة السجون الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 84, "text": "تطبيق مبادرة المؤسسات الصحية المراعية لفئات المجتمع (كبار السن، ذوي الاحتياجات الخاصة)", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 85, "text": "تطبيق مبادرة الجامعات المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}]}], "count": 6}, {"name": "المحور الخامس: استدامة التمويل", "desc": "متابعة الحسابات المالية، وإشراك القطاع الخاص، وحشد الموارد المستمرة لدعم حركة المدينة الصحية.", "criteria": [{"crit_num": 66, "crit_text": "تعزيز المساءلة المالية", "items": [{"num": 216, "text": "تم فتح/تخصيص حساب مصرفي رسمي للمدينة الصحية (أو تدابير بديلة أخرى وفقاً للوائح الحكومية) ويتم الاحتفاظ بجميع المعاملات المالية وتوثيقها", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}, {"crit_num": 67, "crit_text": "إشراك القطاع الخاص في دعم موارد حركة المدن الصحية في المدينة", "items": [{"num": 217, "text": "عدد المؤسسات/الشركات/مراكز الأعمال الخاصة المشاركة في تمويل/دعم مبادرات المدينة الصحية العينية", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}, {"crit_num": 68, "crit_text": "حشد الموارد بصورة مستمرة للمدينة الصحية", "items": [{"num": 218, "text": "تم تدريب اللجنة الفرعية المالية التابعة للجنة المدينة الصحية (أو قطاعات الحكومة المحلية) على تعبئة الموارد/جمع الأموال", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية وإدارة المدن الصحية", "joint": true}, {"num": 219, "text": "عدد المشاريع أو المبادرات التي تم إعدادها وتسليمها للجهات المتبرعة", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}, {"num": 220, "text": "تم صياغة استراتيجية الميزانية طويلة الأجل لتوفير الموارد", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}], "count": 5}]}, {"committee": "اللجنة الصحية", "total_count": 86, "axes": [{"name": "المحور الأول: صحة الفئات العمرية عبر دورة الحياة", "desc": "رعاية صحة الأطفال دون الخامسة، والمراهقين والشباب، والمرأة في سن الإنجاب، وكبار السن، وجعل المدينة صديقة لهذه الفئات.", "criteria": [{"crit_num": 49, "crit_text": "تعزيز صحة الأطفال دون سن 5 سنوات", "items": [{"num": 150, "text": "عدد وفيات الأطفال حديثي الولادة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 151, "text": "عدد وفيات الرضع", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 152, "text": "توزيع أسباب وفيات الرضع", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 153, "text": "عدد الوفيات بين الأطفال دون سن الخامسة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 154, "text": "توزيع أسباب الوفاة بين الأطفال دون سن الخامسة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 155, "text": "نسبة الأطفال الذين تم تحصينهم بالكامل ضد الأمراض التي يمكن الوقاية منها باللقاحات (حسب العمر المستهدف واللقاحات الموصى بها)", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 156, "text": "نسبة الأطفال دون سن الخامسة الذين يمكنهم الوصول إلى خدمات الرعاية الصحية (بما في ذلك مراقبة النمو) ويتلقونها بانتظام", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 157, "text": "معدل الرضاعة الطبيعية المطلقة (لمدة 6 أشهر)", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 158, "text": "معدل سوء التغذية لدى الأطفال دون سن الخامسة (الهزال، التقزم، زيادة الوزن، السمنة)", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 159, "text": "عدد الأطفال الذين تتراوح أعمارهم بين 6 و59 شهراً والذين يعانون من فقر الدم", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 160, "text": "نسبة الأطفال الذين يعانون من سوء التغذية والذين يعانون من نقص فيتامين أ وفقر الدم الناجم عن نقص الحديد والذين تم تحديدهم ويتلقون العلاج والرعاية والمتابعة", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 50, "crit_text": "جعل المدينة صديقة للأطفال", "items": [{"num": 161, "text": "الأنشطة ذات الأولوية لبداية صحية في الحياة، مثل تنمية الطفولة المبكرة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}, {"num": 162, "text": "اعتماد مبادرة المنزل والمجتمع الصديقين للأطفال", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}, {"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 166, "text": "نسبة المدارس التي تتبنى مبادرة المدارس المعززة للصحة", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}, {"num": 168, "text": "الصحة المدرسية والفحص الدوري للطلاب", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}, {"num": 170, "text": "يتم تطبيق سياسة المدارس خالية من التدخين والنيكوتين", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}]}, {"crit_num": 52, "crit_text": "تعزيز صحة المراهقين والشباب", "items": [{"num": 173, "text": "المبادرات التي تهتم بصحة المراهقين والشباب ورفاهيتهم الاجتماعية وحمايتهم (على سبيل المثال مبادرات مكافحة التدخين والنيكوتين والإدمان وما إلى ذلك)", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 53, "crit_text": "تعزيز صحة المرأة في سن الإنجاب", "items": [{"num": 174, "text": "نسبة النساء الحوامل اللاتي حصلن على رعاية ما قبل الولادة في الوقت المناسب (4 زيارات على الأقل)", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 175, "text": "عدد النساء الحوامل اللاتي تتراوح أعمارهن بين 15 و49 عاماً ويعانين من فقر الدم", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 176, "text": "نسبة النساء الحوامل اللاتي يعانين من فقر الدم الناجم عن نقص الحديد وتم تشخيصهن ويتلقين العلاج والرعاية والمتابعة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 177, "text": "حصول النساء الحوامل على بيئة ولادة آمنة ونظيفة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 178, "text": "نسبة الولادات التي تتم تحت إشراف كادر صحي مدرب", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 179, "text": "عدد النساء الحوامل المصابات بفيروس نقص المناعة البشرية اللاتي تلقين العلاج لمنع انتقال العدوى من الأم إلى الطفل", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 180, "text": "نسبة الأمهات اللاتي حصلن على رعاية ما بعد الولادة في الوقت المناسب", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 181, "text": "تغطية الفحص والكشف المبكر عن سرطان الثدي وعنق الرحم", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 182, "text": "نسبة النساء في سن الإنجاب (15-49 عاماً) اللاتي تم تلبية احتياجاتهن إلى تنظيم الأسرة بالطرق الحديثة", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 55, "crit_text": "جعل المدينة مراعية لكبار السن", "items": [{"num": 190, "text": "تطبيق معايير منظمة الصحة العالمية للمدن المراعية لكبار السن، والتي تشمل النقل والخدمات والإدماج المجتمعي", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}], "count": 27}, {"name": "المحور الثاني: الوقاية من الأمراض ومكافحة عوامل الخطر", "desc": "الوقاية من الأمراض غير المعدية، ومعالجة السمنة والخمول البدني، وتطبيق أماكن خالية من التدخين والنيكوتين.", "criteria": [{"crit_num": 31, "crit_text": "تطبيق أماكن خالية من التدخين والنيكوتين", "items": [{"num": 86, "text": "نسبة المناطق الخالية من التدخين والنيكوتين كما ورد في اتفاقية منظمة الصحة العالمية الإطارية بشأن مكافحة التبغ (FCTC)، مثل: نسبة الأماكن الحكومية، ووسائل النقل العام، والمطاعم والمقاهي، والمرافق الحكومية، ومرافق الرعاية الصحية، والمرافق التعليمية الخالية من التدخين والنيكوتين", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 87, "text": "حظر عرض منتجات التبغ والنيكوتين في نقاط البيع", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 88, "text": "حظر تمويل شركات التبغ أو تقديم مساهمات (بما في ذلك المساهمات العينية) لحملات وسائل الإعلام للوقاية من التدخين والنيكوتين، بما في ذلك تلك الموجهة للشباب", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 89, "text": "رفع الضرائب على التبغ", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 46, "crit_text": "تعزيز النشاط البدني والحياة النشطة للأشخاص في جميع الفئات العمرية", "items": [{"num": 143, "text": "نسبة الخمول البدني حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 47, "crit_text": "معالجة السمنة لدى الشباب والبالغين", "items": [{"num": 144, "text": "عدد الأنشطة التي تعالج السمنة لدى الشباب والبالغين", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 145, "text": "نسبة الوزن الزائد حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 146, "text": "نسبة السمنة حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 54, "crit_text": "الوقاية من الأمراض غير المعدية والسيطرة عليها", "items": [{"num": 183, "text": "انتشار مرض السكري حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 184, "text": "انتشار ارتفاع ضغط الدم حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 185, "text": "انتشار الربو حسب الفئات العمرية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 186, "text": "تغطية برامج فحص السرطان", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 187, "text": "عدد الوفيات المنسوبة إلى الأمراض غير المعدية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 188, "text": "انتشار استخدام التبغ الحالي حسب العمر بين الأشخاص الذين تبلغ أعمارهم 15 عاماً فأكثر", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 189, "text": "عدد عيادات \"الإقلاع عن التدخين والنيكوتين\"", "full_committee": "اللجنة الصحية", "joint": false}]}], "count": 15}, {"name": "المحور الثالث: الصحة النفسية والاجتماعية والإنصاف", "desc": "معالجة قضايا الصحة النفسية وتعاطي المخدرات، والتعامل مع قضايا العدالة والإنصاف الصحي كأولوية.", "criteria": [{"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 14, "crit_text": "يتم التعامل مع القضايا الصحية والاجتماعية المتعلقة بتحقيق العدالة والإنصاف باعتبارها أولوية", "items": [{"num": 34, "text": "خطة عمل وتدخلات/مبادرات في المدينة الصحية تعالج عدم الانصاف والمساواة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}, {"crit_num": 15, "crit_text": "التدخلات والأنشطة الصحية والاجتماعية التي تعالج عدم الانصاف والمساواة", "items": [{"num": 35, "text": "عدد وأنواع التدخلات الرامية إلى معالجة عدم الإنصاف والمساواة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}, {"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 96, "text": "نسبة أسرّة الصحة النفسية والعقلية في المستشفيات إلى إجمالي الأسرّة في المستشفيات", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 97, "text": "نسبة حالات الاضطرابات العقلية وتعاطي المخدرات التي تم تحديدها وتتلقى الدعم والمساعدة من المجتمع", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}, {"num": 98, "text": "نسبة الاستخدام الضار للكحول والمخدرات", "full_committee": "اللجنة الصحية واللجنة الأمنية والطوارئ", "joint": true}, {"num": 101, "text": "توافر خدمات الصحة النفسية والعقلية وخدمات الدعم النفسي والاجتماعي وإمكانية الوصول إليها لضحايا جميع أنواع العنف", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}], "count": 7}, {"name": "المحور الرابع: البيئات والأماكن المعزّزة للصحة", "desc": "تنفيذ مبادرات الأماكن الصحية، وتعزيز الثقافة الصحية، والوصول إلى المرافق الرياضية، وخلق بيئة داعمة للتغذية.", "criteria": [{"crit_num": 17, "crit_text": "تعزيز الثقافة الصحية", "items": [{"num": 38, "text": "عدد أنشطة محو الأمية الصحية التي تستهدف المجتمعات المحلية", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 39, "text": "عدد التطبيقات المستخدمة/المطورة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 40, "text": "عدد مواد الإعلام والتواصل والتعليم المنتجة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}, {"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 81, "text": "تطبيق مبادرة أماكن العمل الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 82, "text": "تطبيق مبادرة المجمعات التجارية وأماكن التسوق المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 83, "text": "تطبيق مبادرة السجون الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 84, "text": "تطبيق مبادرة المؤسسات الصحية المراعية لفئات المجتمع (كبار السن، ذوي الاحتياجات الخاصة)", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 85, "text": "تطبيق مبادرة الجامعات المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}]}, {"crit_num": 45, "crit_text": "تعزيز الوصول إلى المرافق الرياضية والترفيهية (خارج الأماكن العامة)", "items": [{"num": 140, "text": "وجود مبادرات لتعزيز النشاط البدني وممارسة الرياضة، مثل اشتراك مخفض للنوادي والصالات الرياضية أو في المولات الصحية", "full_committee": "اللجنة البيئية واللجنة الصحية", "joint": true}]}, {"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 147, "text": "توافر وجبات صحية في أماكن العمل والمدارس والجامعات وأماكن التسوق", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية", "joint": true}, {"num": 148, "text": "يتم عمل أنشطة توعية للمجتمع وأولياء الأمور", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية واللجنة الإعلامية", "joint": true}, {"num": 149, "text": "يتم استخدام وسائل الإعلام ووسائط التواصل الاجتماعي للترويج للغذاء الصحي", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}], "count": 12}, {"name": "المحور الخامس: جودة الخدمات الصحية وتغطيتها", "desc": "ضمان الوصول إلى الخدمات الصحية وتغطيتها للسكان، وتحسين جودتها وسلامتها، ودعم أنشطة تعزيز الصحة إعلامياً وتعليمياً.", "criteria": [{"crit_num": 57, "crit_text": "دعم أنشطة تعزيز الصحة (بما في ذلك وسائل الإعلام والتعليم والاتصال)", "items": [{"num": 192, "text": "عدد المتطوعين الصحيين الذين تم تدريبهم على القضايا الصحية ذات الأولوية والبرامج المتعلقة بالصحة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 193, "text": "وتيرة أنشطة تعزيز الصحة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 194, "text": "استخدام وسائل التواصل الاجتماعي", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 195, "text": "إنتاج مواد المعلومات والتعليم والاتصال", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 196, "text": "الاحتفال بأيام الصحة العالمية", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}, {"crit_num": 58, "crit_text": "ضمان الوصول إلى الخدمات الصحية", "items": [{"num": 197, "text": "التغطية الصحية الشاملة من حيث الوصول والتكلفة والجودة", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 198, "text": "نسبة السكان المشمولين ببرامج التأمين (مثل التأمين الصحي الاجتماعي، والتأمين الصحي الخاص، والخدمات الصحية الحكومية المجانية، وما إلى ذلك) حسب الجنسية والجنس والفئة العمرية والحالة الوظيفية والظروف الصحية والاجتماعية (مثل الحوامل، والمعاقين، والفقراء، وما إلى ذلك)", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 199, "text": "نسبة السكان المشمولين بحزمة الخدمات الصحية الأساسية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 200, "text": "الأدوية الأساسية واللقاحات والأدوات الطبية (وفقاً لاحتياجات النظام الصحي المحلي) متوفرة في المرافق الصحية", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 59, "crit_text": "ضمان تغطية السكان بالخدمات الصحية والاجتماعية", "items": [{"num": 201, "text": "وجود برامج وخدمات ذات جودة لتعزيز الصحة النفسية والعقلية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 202, "text": "المرافق الصحية التي تلتزم بمؤشرات الجودة الوطنية وسلامة المرضى", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 203, "text": "عدد المرافق الصحية التي تتبنى مبادرة \"المؤسسات الصحية صديقة للمرضى\"", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 204, "text": "المرافق الصحية التي تحصل على شهادات الاعتماد الوطنية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 205, "text": "تقارير سنوية عن رضا متلقي الرعاية ومقدمي الرعاية", "full_committee": "اللجنة الصحية", "joint": false}, {"num": 206, "text": "يتم تقييم التفاعلات بين مقدمي الرعاية الصحية والمجتمع ويتم اتخاذ الإجراءات وفقاً لذلك", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 60, "crit_text": "تحسين جودة الخدمات وسلامتها لتلبية احتياجات وتوقعات مكونات وفئات المجتمع المختلفة", "items": [{"num": 207, "text": "نظام إحالة فعال مع مسارات واضحة للمرضى", "full_committee": "اللجنة الصحية", "joint": false}]}], "count": 16}, {"name": "المحور السادس: الجاهزية الصحية للطوارئ والنفايات الطبية", "desc": "تطوير أنظمة المراقبة والإنذار المبكر، وفهم نقاط الضعف الصحية في المدينة، والإدارة الآمنة للنفايات الطبية.", "criteria": [{"crit_num": 39, "crit_text": "تعزيز الإدارة الآمنة للنفايات الطبية", "items": [{"num": 120, "text": "الإدارة والمعالجة الآمنة للنفايات الطبية", "full_committee": "اللجنة الصحية واللجنة البيئية", "joint": true}]}, {"crit_num": 62, "crit_text": "تعزيز الخدمات العامة المحلية والقدرة على التعامل مع حالات الطوارئ الصحية العامة وتغير المناخ، فضلاً عن الكوارث الطبيعية والبشرية", "items": [{"num": 208, "text": "توافر خطة للحد من مخاطر الكوارث في المدينة، والاستعداد للطوارئ والاستجابة لها والتعافي منها (بما في ذلك حالات تفشي الأوبئة) بما يتماشى مع خطط الحد من مخاطر الكوارث والاستجابة لها على المستوى الوطني، ويتم توصيل الخطة إلى جميع أصحاب العلاقة والشركاء في المدينة", "full_committee": "اللجنة الصحية واللجنة الأمنية والطوارئ", "joint": true}]}, {"crit_num": 64, "crit_text": "تطوير أنظمة مراقبة شاملة واستباقية أثناء الأزمات", "items": [{"num": 213, "text": "وجود نظام استباقي لمراقبة الأمراض والطوارئ والإنذار المبكر لها", "full_committee": "اللجنة الصحية", "joint": false}]}, {"crit_num": 65, "crit_text": "فهم جميع جوانب نقاط الضعف في المدينة والتصرف بشأنها", "items": [{"num": 214, "text": "يتم رسم خريطة للمجموعات المعرضة للخطر (مثل النساء الحوامل، والأشخاص ذوي الإعاقة، والمرضى المصابين بأمراض مزمنة، وكبار السن، والأشخاص الذين يعانون من اضطرابات عقلية، وما إلى ذلك)", "full_committee": "اللجنة الأمنية والطوارئ واللجنة الصحية", "joint": true}]}], "count": 4}, {"name": "المحور السابع: تقييم الأثر الصحي والتخطيط الحضري الصحي", "desc": "المشاركة في تقييم الأثر الصحي للمشاريع التنموية، ودعم خطط التنمية الحضرية طويلة الأمد.", "criteria": [{"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 32, "text": "عدد دراسات تقييم الأثر الصحي التي أجريت في المدينة الصحية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 24, "crit_text": "وجود خطة تنمية حضرية طويلة الأمد تدمج أهداف الصحة والرفاه بالإضافة إلى أهداف التنمية الحضرية التي تسهم في خفض الكربون", "items": [{"num": 59, "text": "لدى المدينة القدرة على صياغة وتنفيذ خطة تنمية حضرية على مستوى المدينة بنطاق متعدد القطاعات", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 60, "text": "اعتمدت المدينة خطة تنمية حضرية طويلة الأجل بنطاق متعدد القطاعات تدمج الصحة والتنمية الحضرية التي تسهم في خفض الكربون", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 61, "text": "السلطات المحلية واللجنة الرئيسية للمدينة تُقيّم الأثر الصحي للمشاريع التنموية وتنفذ الحلول المناسبة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 62, "text": "يشارك المتطوعون ومنظمات المجتمع المدني في وضع الخطة وتحديد مقترحات التنمية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}]}], "count": 5}]}, {"committee": "اللجنة الاجتماعية", "total_count": 32, "axes": [{"name": "المحور الأول: العدالة الاجتماعية والإنصاف الصحي", "desc": "قياس الفوارق باستخدام أدوات قائمة على الأدلة، ومعالجة قضايا عدم الإنصاف باعتبارها أولوية.", "criteria": [{"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 14, "crit_text": "يتم التعامل مع القضايا الصحية والاجتماعية المتعلقة بتحقيق العدالة والإنصاف باعتبارها أولوية", "items": [{"num": 34, "text": "خطة عمل وتدخلات/مبادرات في المدينة الصحية تعالج عدم الانصاف والمساواة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}, {"crit_num": 15, "crit_text": "التدخلات والأنشطة الصحية والاجتماعية التي تعالج عدم الانصاف والمساواة", "items": [{"num": 35, "text": "عدد وأنواع التدخلات الرامية إلى معالجة عدم الإنصاف والمساواة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}], "count": 3}, {"name": "المحور الثاني: التماسك المجتمعي والمشاركة", "desc": "تعزيز الحوار الاجتماعي والتضامن والاندماج، ورسم خريطة المشهد الاجتماعي واحتياجات الفئات ذات الاحتياجات الخاصة.", "criteria": [{"crit_num": 18, "crit_text": "تعزيز الحوار الاجتماعي والمشاركة والتضامن الاجتماعي والإندماج", "items": [{"num": 41, "text": "عدد المنتديات النقاشية الاجتماعية (سواء وجهاً لوجه أو افتراضياً)", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 42, "text": "يعمل برنامج المدن الصحية في المدينة من خلال آلية واضحة تهدف لمشاركة المجتمع المدني والذي يضم فئات المجتمع المختلفة وتعمل بانتظام", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 43, "text": "عدد الحوارات والاجتماعات التي عقدت وعدد المنظمات والأفراد الذين شاركوا فيها", "full_committee": "اللجنة الاجتماعية", "joint": false}]}, {"crit_num": 19, "crit_text": "رسم خريطة للمشهد الاجتماعي في المدينة مع الاهتمام باحتياجات الأشخاص ذوي الاحتياجات الاجتماعية", "items": [{"num": 44, "text": "تحليل ومعرفة الوضع الاجتماعي", "full_committee": "اللجنة الإعلامية واللجنة الاجتماعية", "joint": true}, {"num": 45, "text": "نسبة الأسر/الأفراد ذوي الاحتياجات الاجتماعية", "full_committee": "اللجنة الاجتماعية", "joint": false}]}, {"crit_num": 20, "crit_text": "ضمان وصول الدعم الاجتماعي للفئات الأكثر احتياجاً", "items": [{"num": 46, "text": "وجود برامج وشبكات للحماية والمساعدة الاجتماعية", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 47, "text": "نسبة الأسر أو الأفراد المستفيدة الذين يتم دعمهم", "full_committee": "اللجنة الاجتماعية", "joint": false}]}], "count": 7}, {"name": "المحور الثالث: التنمية المجتمعية والتمكين الاقتصادي", "desc": "دعم المشاريع والمبادرات المجتمعية المحلية، وتعزيز التدريب المهني وفرص التوظيف.", "criteria": [{"crit_num": 21, "crit_text": "دعم المشاريع والمبادرات المجتمعية المحلية", "items": [{"num": 48, "text": "عدد المشاريع والمبادرات", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 49, "text": "عدد الأسر المستفيدة من المشاريع", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 50, "text": "معدل البطالة حسب الجنس والعمر والأشخاص ذوي الإعاقة", "full_committee": "اللجنة الاجتماعية", "joint": false}]}, {"crit_num": 22, "crit_text": "تعزيز أنشطة تنمية المهارات/المهن", "items": [{"num": 51, "text": "نسبة العمالة غير الرسمية من إجمالي العمالة", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 52, "text": "عدد الوظائف التي تم إنشاؤها", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 53, "text": "عدد معاهد التدريب المهني/المهارات المتعاونة", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 54, "text": "عدد أنشطة التدريب المهني/المهارات", "full_committee": "اللجنة الاجتماعية", "joint": false}]}], "count": 7}, {"name": "المحور الرابع: الإسكان الملائم", "desc": "تحديد معايير الإسكان الملائم، ورصد الأحياء غير الملائمة، وتنفيذ تدخلات التحسين.", "criteria": [{"crit_num": 34, "crit_text": "الترويج لتعزيز فرص الحصول على السكن الملائم", "items": [{"num": 102, "text": "تحديد تعريف/معيار توافقي للإسكان الملائم (مع مراعاة معايير وكالات الأمم المتحدة والمعايير الوطنية)", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 103, "text": "تحديد نسبة سكان المناطق الحضرية الذين يعيشون في الأحياء الفقيرة أو المستوطنات غير الرسمية أو المساكن غير الملائمة من خلال بيانات محددة ديموغرافياً ورسم خرائط مكانية", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 104, "text": "عدد التدخلات التي تم تنفيذها لتحسين الأحياء الفقيرة/تخفيف آثار الإسكان غير الملائم", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 105, "text": "عدد الأسر المستفيدة من تدخلات تحسين الأحياء الفقيرة/تخفيف آثار الإسكان غير الملائم", "full_committee": "اللجنة الاجتماعية", "joint": false}]}], "count": 4}, {"name": "المحور الخامس: رعاية الفئات ذات الاحتياجات الخاصة", "desc": "دعم مبادرات المؤسسات المراعية لكبار السن والأطفال والمصابين باضطرابات نفسية، وجعل المدينة صديقة لهذه الفئات.", "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 84, "text": "تطبيق مبادرة المؤسسات الصحية المراعية لفئات المجتمع (كبار السن، ذوي الاحتياجات الخاصة)", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية والمنسق العام", "joint": true}]}, {"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 97, "text": "نسبة حالات الاضطرابات العقلية وتعاطي المخدرات التي تم تحديدها وتتلقى الدعم والمساعدة من المجتمع", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}, {"num": 101, "text": "توافر خدمات الصحة النفسية والعقلية وخدمات الدعم النفسي والاجتماعي وإمكانية الوصول إليها لضحايا جميع أنواع العنف", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}]}, {"crit_num": 50, "crit_text": "جعل المدينة صديقة للأطفال", "items": [{"num": 161, "text": "الأنشطة ذات الأولوية لبداية صحية في الحياة، مثل تنمية الطفولة المبكرة", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}, {"num": 162, "text": "اعتماد مبادرة المنزل والمجتمع الصديقين للأطفال", "full_committee": "اللجنة الصحية واللجنة الاجتماعية", "joint": true}, {"num": 163, "text": "توافر خدمات حماية الطفل والوصول إليها", "full_committee": "اللجنة الاجتماعية", "joint": false}]}, {"crit_num": 55, "crit_text": "جعل المدينة مراعية لكبار السن", "items": [{"num": 190, "text": "تطبيق معايير منظمة الصحة العالمية للمدن المراعية لكبار السن، والتي تشمل النقل والخدمات والإدماج المجتمعي", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}], "count": 7}, {"name": "المحور السادس: النشاط البدني والتغذية المجتمعية", "desc": "تشجيع المشي وركوب الدراجات والتنقل الصحي، ودعم بيئة التغذية الصحية في المجتمع.", "criteria": [{"crit_num": 46, "crit_text": "تعزيز النشاط البدني والحياة النشطة للأشخاص في جميع الفئات العمرية", "items": [{"num": 141, "text": "المبادرات التي تشجع على المشي وركوب الدراجات", "full_committee": "اللجنة الاجتماعية", "joint": false}, {"num": 142, "text": "المبادرات التي تستثمر في النقل الصحي", "full_committee": "اللجنة الاجتماعية", "joint": false}]}, {"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 147, "text": "توافر وجبات صحية في أماكن العمل والمدارس والجامعات وأماكن التسوق", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية", "joint": true}, {"num": 148, "text": "يتم عمل أنشطة توعية للمجتمع وأولياء الأمور", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية واللجنة الإعلامية", "joint": true}]}], "count": 4}]}, {"committee": "اللجنة الأمنية والطوارئ", "total_count": 19, "axes": [{"name": "المحور الأول: الأمن الحضري والحد من الجريمة", "desc": "قياس ورصد معدلات الجريمة والسلوك المعادي للمجتمع، ودعم مبادرات التصميم الحضري التي تقلل الجريمة والخوف منها.", "criteria": [{"crit_num": 29, "crit_text": "الحد من الجريمة / الخوف من الوقوع في الجريمة وانعدام الأمان من خلال التصميم الحضري", "items": [{"num": 77, "text": "يتم قياس معدل وقوع الجريمة/السلوك المعادي للمجتمع وحوادث الطرق ورسم خرائط مكانية لها بشكل مستمر", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 78, "text": "يتم مراقبة الأمان (على مستوى الشارع، في وسائل النقل العام) ورسم خرائط مكانية له (حسب المجموعة الديموغرافية)", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 79, "text": "يتم تحديد/بدء/إكمال مبادرات التصميم الحضري بهدف الحد/تقليل الجريمة/الخوف من الجريمة وحوادث المرور، على سبيل المثال إنارة الشوارع، والمساحات، و\"المراقبة الطبيعية\" من المباني المواجهة للخارج، والأرصفة والمعابر المخصصة للمشاة، وممرات الدراجات المخصصة وما إلى ذلك", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}], "count": 3}, {"name": "المحور الثاني: السلامة المرورية", "desc": "رصد الوفيات الناتجة عن حوادث المرور، وتكييف حدود السرعة، ومتابعة معدلات ارتداء أحزمة الأمان والخوذات.", "criteria": [{"crit_num": 32, "crit_text": "معالجة الحوادث والجرائم والعنف", "items": [{"num": 90, "text": "عدد الوفيات السنوية بسبب حوادث المرور (حسب الجنس والفئة العمرية)", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 91, "text": "تكييف حدود السرعة الوطنية على مستوى المدينة", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 92, "text": "معدل ارتداء حزام الأمان", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 93, "text": "معدل ارتداء خوذة الدراجة النارية", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 94, "text": "عدد/نسبة الجرائم", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 95, "text": "نسبة وعدد الأطفال الذين تتراوح أعمارهم بين 5 و17 عاماً المنخرطين في عمالة الأطفال، حسب الجنس والعمر", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}], "count": 6}, {"name": "المحور الثالث: الصحة النفسية المرتبطة بالعنف والإدمان", "desc": "رصد الاستخدام الضار للكحول والمخدرات، وحالات القتل العمد والانتحار، بالتنسيق مع اللجنة الصحية.", "criteria": [{"crit_num": 33, "crit_text": "معالجة قضايا الصحة النفسية والعقلية وتعاطي المخدرات وتقليل التوتر في المجتمع", "items": [{"num": 98, "text": "نسبة الاستخدام الضار للكحول والمخدرات", "full_committee": "اللجنة الصحية واللجنة الأمنية والطوارئ", "joint": true}, {"num": 99, "text": "عدد ضحايا القتل العمد (حسب الجنس والعمر)", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 100, "text": "عدد حالات الانتحار", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}], "count": 3}, {"name": "المحور الرابع: الاستعداد والاستجابة للطوارئ والكوارث", "desc": "تفعيل خطط الطوارئ والتواصل بشأن المخاطر، وتدريب المتطوعين، وإجراء تمارين الإخلاء الدورية، وحماية الفئات الأكثر عرضة للخطر.", "criteria": [{"crit_num": 62, "crit_text": "تعزيز الخدمات العامة المحلية والقدرة على التعامل مع حالات الطوارئ الصحية العامة وتغير المناخ، فضلاً عن الكوارث الطبيعية والبشرية", "items": [{"num": 208, "text": "توافر خطة للحد من مخاطر الكوارث في المدينة، والاستعداد للطوارئ والاستجابة لها والتعافي منها (بما في ذلك حالات تفشي الأوبئة) بما يتماشى مع خطط الحد من مخاطر الكوارث والاستجابة لها على المستوى الوطني، ويتم توصيل الخطة إلى جميع أصحاب العلاقة والشركاء في المدينة", "full_committee": "اللجنة الصحية واللجنة الأمنية والطوارئ", "joint": true}, {"num": 209, "text": "يعرف المجتمع خطة الطوارئ، وما يجب القيام به، ومن يجب الإبلاغ إليه، ومن سيفعل ماذا أثناء حالة الطوارئ", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}, {"crit_num": 63, "crit_text": "تعزيز قدرة المجتمع على الصمود والاستجابة في حالة حدوث طوارئ", "items": [{"num": 210, "text": "يتم تحديث خطط التواصل بشأن المخاطر وإشراك المجتمع", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 211, "text": "يتم تدريب اللجنة الفرعية للاستعداد للطوارئ والاستجابة لها والمتطوعين على خطط الاستعداد للطوارئ، وكيفية التعامل مع حالات الطوارئ وتوفير الإسعافات الأولية عندما وأينما تكون مطلوبة", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}, {"num": 212, "text": "يتم عمل تمارين الإخلاء/المحاكاة بصورة دورية", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}, {"crit_num": 65, "crit_text": "فهم جميع جوانب نقاط الضعف في المدينة والتصرف بشأنها", "items": [{"num": 214, "text": "يتم رسم خريطة للمجموعات المعرضة للخطر (مثل النساء الحوامل، والأشخاص ذوي الإعاقة، والمرضى المصابين بأمراض مزمنة، وكبار السن، والأشخاص الذين يعانون من اضطرابات عقلية، وما إلى ذلك)", "full_committee": "اللجنة الأمنية والطوارئ واللجنة الصحية", "joint": true}, {"num": 215, "text": "تتوفر خطط الإخلاء للتعامل مع المجموعات المعرضة للخطر (بما في ذلك أماكن الإخلاء، وأنواع الإمدادات، وما إلى ذلك)", "full_committee": "اللجنة الأمنية والطوارئ", "joint": false}]}], "count": 7}]}, {"committee": "اللجنة الإعلامية", "total_count": 16, "axes": [{"name": "المحور الأول: التسويق والترويج لمفهوم المدينة الصحية", "desc": "إنتاج المواد الإبداعية، وإدارة الموقع الإلكتروني ووسائل التواصل الاجتماعي للتعريف بمفهوم المدينة الصحية.", "criteria": [{"crit_num": 9, "crit_text": "التسويق والترويج والدعوة إلى مفهوم ومنهجية المدينة الصحية", "items": [{"num": 22, "text": "إنتاج ونشر مواد إبداعية مبتكرة للتسويق والترويج لمفهوم المدينة الصحية", "full_committee": "اللجنة الإعلامية", "joint": false}, {"num": 23, "text": "لدى المدينة الصحية موقع إلكتروني تفاعلي", "full_committee": "اللجنة الإعلامية", "joint": false}, {"num": 24, "text": "تُستخدم وسائل التواصل الاجتماعي للتسويق والترويج والدعوة", "full_committee": "اللجنة الإعلامية", "joint": false}, {"num": 25, "text": "مشاركة وسائل الإعلام وتفاعلها", "full_committee": "اللجنة الإعلامية", "joint": false}, {"num": 26, "text": "عدد التغطيات الإعلامية", "full_committee": "اللجنة الإعلامية", "joint": false}]}], "count": 5}, {"name": "المحور الثاني: نشر الثقافة الصحية والتوعية المجتمعية", "desc": "دعم أنشطة محو الأمية الصحية، والترويج للغذاء الصحي، ودعم حملات تعزيز الصحة والاحتفال بالأيام العالمية.", "criteria": [{"crit_num": 17, "crit_text": "تعزيز الثقافة الصحية", "items": [{"num": 38, "text": "عدد أنشطة محو الأمية الصحية التي تستهدف المجتمعات المحلية", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 39, "text": "عدد التطبيقات المستخدمة/المطورة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 40, "text": "عدد مواد الإعلام والتواصل والتعليم المنتجة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}, {"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 148, "text": "يتم عمل أنشطة توعية للمجتمع وأولياء الأمور", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية واللجنة الإعلامية", "joint": true}, {"num": 149, "text": "يتم استخدام وسائل الإعلام ووسائط التواصل الاجتماعي للترويج للغذاء الصحي", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}, {"crit_num": 57, "crit_text": "دعم أنشطة تعزيز الصحة (بما في ذلك وسائل الإعلام والتعليم والاتصال)", "items": [{"num": 192, "text": "عدد المتطوعين الصحيين الذين تم تدريبهم على القضايا الصحية ذات الأولوية والبرامج المتعلقة بالصحة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 193, "text": "وتيرة أنشطة تعزيز الصحة", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 194, "text": "استخدام وسائل التواصل الاجتماعي", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 195, "text": "إنتاج مواد المعلومات والتعليم والاتصال", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}, {"num": 196, "text": "الاحتفال بأيام الصحة العالمية", "full_committee": "اللجنة الصحية واللجنة الإعلامية", "joint": true}]}], "count": 10}, {"name": "المحور الثالث: دعم تحليل الوضع الاجتماعي", "desc": "المساهمة في تحليل ومعرفة الوضع الاجتماعي للمدينة بالتنسيق مع اللجنة الاجتماعية.", "criteria": [{"crit_num": 19, "crit_text": "رسم خريطة للمشهد الاجتماعي في المدينة مع الاهتمام باحتياجات الأشخاص ذوي الاحتياجات الاجتماعية", "items": [{"num": 44, "text": "تحليل ومعرفة الوضع الاجتماعي", "full_committee": "اللجنة الإعلامية واللجنة الاجتماعية", "joint": true}]}], "count": 1}]}, {"committee": "اللجنة المالية", "total_count": 5, "axes": [{"name": "المحور الأول: المساءلة المالية", "desc": "فتح الحساب المصرفي الرسمي للمدينة الصحية وتوثيق جميع المعاملات المالية.", "criteria": [{"crit_num": 66, "crit_text": "تعزيز المساءلة المالية", "items": [{"num": 216, "text": "تم فتح/تخصيص حساب مصرفي رسمي للمدينة الصحية (أو تدابير بديلة أخرى وفقاً للوائح الحكومية) ويتم الاحتفاظ بجميع المعاملات المالية وتوثيقها", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}], "count": 1}, {"name": "المحور الثاني: الشراكات وحشد الموارد", "desc": "إشراك القطاع الخاص في التمويل، وتدريب اللجنة الفرعية المالية، وصياغة استراتيجية الميزانية طويلة الأجل.", "criteria": [{"crit_num": 67, "crit_text": "إشراك القطاع الخاص في دعم موارد حركة المدن الصحية في المدينة", "items": [{"num": 217, "text": "عدد المؤسسات/الشركات/مراكز الأعمال الخاصة المشاركة في تمويل/دعم مبادرات المدينة الصحية العينية", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}, {"crit_num": 68, "crit_text": "حشد الموارد بصورة مستمرة للمدينة الصحية", "items": [{"num": 218, "text": "تم تدريب اللجنة الفرعية المالية التابعة للجنة المدينة الصحية (أو قطاعات الحكومة المحلية) على تعبئة الموارد/جمع الأموال", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية وإدارة المدن الصحية", "joint": true}, {"num": 219, "text": "عدد المشاريع أو المبادرات التي تم إعدادها وتسليمها للجهات المتبرعة", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}, {"num": 220, "text": "تم صياغة استراتيجية الميزانية طويلة الأجل لتوفير الموارد", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية", "joint": true}]}], "count": 4}]}, {"committee": "اللجنة البيئية", "total_count": 47, "axes": [{"name": "المحور الأول: المناخ والمباني المستدامة", "desc": "دعم الأسطح الحضرية المقاومة للمناخ، وتشجيع المباني الموفرة للطاقة والمواد المحلية المستدامة.", "criteria": [{"crit_num": 26, "crit_text": "تعزيز الأسطح الحضرية المساهمة في التصدي للتغيرات المناخية", "items": [{"num": 65, "text": "يدعم التصميم الحضري ولوائح البناء في المدينة الأسطح الحضرية المقاومة للمناخ والتي تكون مظللة وعاكسة و/أو ماصة (المساحات الخضراء، أثاث الشوارع المزروع، عناصر البناء الخضراء (الأسقف/الجدران الخضراء))", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 66, "text": "الأسطح المائية (الطبيعية، الاصطناعية)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 67, "text": "مواد الرصف ذات الألوان الفاتحة/المسامية", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 68, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات التي تزيد من تغطية الأسطح الحضرية المقاومة للمناخ", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 27, "crit_text": "الدعوة إلى المباني الموفرة للطاقة", "items": [{"num": 69, "text": "يدعم قانون البناء التابع لسلطة المدينة بناء المباني المستدامة والمرنة باستخدام المواد المحلية", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 70, "text": "الإجراءات التي تم تحديدها/بدءها/إكمالها لدعم البناء الجديد المستدام (على سبيل المثال مراجعة معايير الطاقة المستخدمة في المباني محلياً مثل LEED)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 71, "text": "تجربة المباني الموفرة للطاقة في القطاع العام", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 72, "text": "عقد جلسات توعية/تدريب للصناعة والترويج للمباني الخضراء والصحية وتقنيات البناء المستدامة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 73, "text": "يدعم قانون البناء التابع لسلطة المدينة إعادة تأهيل المباني لتحسين استدامتها ومرونتها باستخدام المواد المحلية", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 74, "text": "الإجراءات التي تم تحديدها/بدءها/إكمالها لدعم إعادة تأهيل المباني المستدامة (مراجعة الفرص والتحديات في المخزون المحلي للمباني)", "full_committee": "اللجنة البيئية", "joint": false}]}], "count": 10}, {"name": "المحور الثاني: المياه والصرف الصحي", "desc": "تعزيز الوصول إلى المياه الآمنة وكفاءة استخدامها، وإدارة الصرف الصحي ومياهه بشكل ملائم.", "criteria": [{"crit_num": 35, "crit_text": "تعزيز الوصول إلى المياه الآمنة وبأسعار معقولة بما في ذلك تحسين كفاءة استخدام المياه", "items": [{"num": 106, "text": "يتم تحديد نسبة الأسر التي تستخدم خدمات مياه الشرب الآمنة ورسم خريطة مكانية لها (ويتم تضمينها في تحليل/ملف الحالة للمدينة)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 107, "text": "التدخلات التي يتم البدء بها و/أو تنفيذها لزيادة نسبة السكان الذين يستخدمون خدمات مياه الشرب الآمنة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 108, "text": "يتم رصد ومعرفة نسبة الهدر في استخدام المياه في المدينة وتحديد الفرص لتحسين كفاءة استخدام المياه (على سبيل المثال تقليل الخسائر الفنية في الشبكة)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 109, "text": "فرص إعادة استخدام مياه الصرف الصحي", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 110, "text": "يتم تطبيق مبادرات تهدف لتغيير السلوك للحد من الاستهلاك غير المرشد للمياه", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 111, "text": "التدخلات التي يتم البدء بها و/أو تنفيذها لزيادة كفاءة استخدام المياه", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 36, "crit_text": "تعزيز الصرف الصحي الملائم", "items": [{"num": 112, "text": "يتم تحديد نسبة السكان الذين يستخدمون: (أ) خدمات الصرف الصحي المُدارة بأمان (ب) مرافق غسل اليدين بالماء والصابون، ورسم خريطة مكانية لها", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 37, "crit_text": "تعزيز الإدارة الملائمة لمياه الصرف الصحي", "items": [{"num": 113, "text": "التدخلات التي تم البدء بها وتنفيذها لزيادة نسبة السكان الذين يستخدمون: (أ) خدمات الصرف الصحي المُدارة بأمان (ب) مرافق غسل اليدين بالماء والصابون", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 114, "text": "يتم تحديد نسبة تدفقات مياه الصرف الصحي المنزلية والصناعية المعالجة بأمان ورسم خريطة مكانية لها (أي المصادر والمصارف)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 115, "text": "التدخلات التي تم البدء فيها/إكمالها لزيادة نسبة تدفقات مياه الصرف الصحي المعالجة بأمان", "full_committee": "اللجنة البيئية", "joint": false}]}], "count": 10}, {"name": "المحور الثالث: النفايات الصلبة والطبية", "desc": "إدارة النفايات الصلبة وإعادة تدويرها، والمعالجة الآمنة للنفايات الطبية.", "criteria": [{"crit_num": 38, "crit_text": "تعزيز الإدارة الملائمة للنفايات الصلبة، بما في ذلك إعادة التدوير", "items": [{"num": 116, "text": "يتم تحديد النفايات الصلبة بالبلدية الناتجة للفرد الواحد، ونسبة الأسر التي تخدمها أنظمة إدارة النفايات الصلبة بالبلدية، ونسبة النفايات الصلبة بالبلدية المعاد تدويرها", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 117, "text": "يتم تحديد نسبة وعدد الأسر التي تخدمها أنظمة إدارة النفايات الصلبة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 118, "text": "يتم تحديد نسبة وكمية النفايات الصلبة المعاد تدويرها", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 119, "text": "يتم البدء في التدخلات التي تشجع الوعي العام والتغييرات السلوكية بما يتماشى مع الحد من وإعادة الاستخدام وإعادة التدوير والاسترداد و/أو تنفيذها", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 39, "crit_text": "تعزيز الإدارة الآمنة للنفايات الطبية", "items": [{"num": 120, "text": "الإدارة والمعالجة الآمنة للنفايات الطبية", "full_committee": "اللجنة الصحية واللجنة البيئية", "joint": true}]}], "count": 5}, {"name": "المحور الرابع: جودة الهواء والطاقة", "desc": "مراقبة تلوث الهواء والضوضاء، وتوسيع الوصول لخدمات الطاقة الحديثة والمتجددة.", "criteria": [{"crit_num": 40, "crit_text": "تعزيز جودة الهواء المناسبة", "items": [{"num": 121, "text": "تقوم السلطة المسؤولة بإجراء مراقبة منتظمة لتلوث الهواء - يتم التعارف بمعايير جودة الهواء/الموافقة عليها", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 122, "text": "وجود نظام إنذار مبكر لتلوث الهواء", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 123, "text": "يتم إنتاج نموذج لجودة الهواء في المناطق الحضرية", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 124, "text": "يحدد التركيزات المكانية لتلوث الهواء ومكوناته ومصادره (الاستفادة من بيانات منظمة الصحة العالمية في هذا الصدد)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 125, "text": "توجد خطة/سياسة للتنمية الحضرية للمدينة تعزز معايير جودة الهواء، بما في ذلك من خلال تحديد المواقع الحساسة للاستخدامات الملوثة (مثل الصناعة) في المدينة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 126, "text": "يتم البدء في التدخلات/الأنشطة الرامية إلى الحد من تلوث الهواء/إكمالها", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 41, "crit_text": "معالجة تلوث الهواء والضوضاء", "items": [{"num": 127, "text": "معدل قياس تلوث الهواء والضوضاء من قبل الجهة المختصة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 128, "text": "عدد التدخلات/الأنشطة للحد من تلوث الهواء والضوضاء", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 129, "text": "تحديد موقع المناطق الصناعية داخل المدينة", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 42, "crit_text": "تعزيز الوصول الشامل إلى خدمات الطاقة الحديثة والموثوقة وبأسعار معقولة وزيادة نسبة مساهمة الطاقة المتجددة ضمن مصادر الطاقة", "items": [{"num": 130, "text": "يتم تحديد حصة الأسر التي لديها إمكانية الوصول إلى الكهرباء ورسم خريطة مكانية لها", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 131, "text": "يتم تحديد/بدء/إكمال المبادرات على مستوى المدينة لزيادة حصة الأسر التي لديها إمكانية الوصول إلى الكهرباء", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 132, "text": "يتم تحديد/بدء/إكمال المبادرات على مستوى المدينة لزيادة نسبة مساهمة الطاقة المتجددة ضمن مصادر الطاقة في المدينة (على سبيل المثال اعتماد البلدية لمصابيح الشوارع التي تعمل بالطاقة الشمسية، وأساطيل المركبات العامة التي تستخدم الطاقة الخضراء)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 133, "text": "يتم تحديد أهداف سياسة الطاقة المتجددة", "full_committee": "اللجنة البيئية", "joint": false}]}], "count": 13}, {"name": "المحور الخامس: التنقل المستدام والمساحات الخضراء", "desc": "تعزيز أنظمة النقل المستدامة، وتوسيع المساحات الخضراء والعامة والمرافق الرياضية.", "criteria": [{"crit_num": 43, "crit_text": "تعزيز أنظمة النقل المستدامة المتاحة للجميع", "items": [{"num": 134, "text": "تم إجراء مسح لأنظمة التنقل في المدينة لتحديد حصة الوسائط (نسبة المسافرين والكيلومترات التي قطعها الركاب باستخدام نوع معين من وسائل النقل، بما في ذلك السيارات الخاصة وسيارات الأجرة والنقل غير الآلي والتنقل النشط (المشي وركوب الدراجات) والنقل العام وما إلى ذلك)", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 135, "text": "المبادرات (المشاريع/الخطط والاستراتيجيات) التي تم تحديدها/بدءها/إكمالها لتقليل استخدام السيارات من خلال تحسين جودة أنظمة النقل الأخرى القائمة على النقل العام وغير الآلي، و/أو التقدم نحو النقل المنخفض الكربون/النشط (مثل النقل العام الأخضر؛ مخطط الدراجات في المدينة؛ المناطق الخالية من السيارات/المنخفضة الانبعاثات؛ التدخلات التصميمية المؤيدة للمشاة وركوب الدراجات؛ أنظمة ركن السيارات والركوب)", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 44, "crit_text": "تعزيز الوصول الشامل إلى المساحات الخضراء والعامة الآمنة والشاملة والمتاحة للجميع", "items": [{"num": 136, "text": "يتم مسح الأراضي الحضرية فيما يتعلق بقياس ورسم بعض أو كل ما يلي: حصة المنطقة غير المبنية داخل حدود المدينة، وحصة المنطقة المبنية التي تُعد مساحة مفتوحة للاستخدام العام من قبل الجميع، وحصة المنطقة المبنية التي تحتوي على غطاء أخضر (البنية التحتية الخضراء الحضرية بما في ذلك المناطق الطبيعية وشبه الطبيعية والمتنزهات والحدائق والأسطح الخضراء والنباتات على جوانب الشوارع)، والمساحة الخضراء للفرد الواحد", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 137, "text": "إدراج الترويج للمساحات المفتوحة والخضراء في خطة التنمية الحضرية للمدينة", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 138, "text": "يتم تحديد المبادرات/البدء فيها/إكمالها لزيادة المساحات المفتوحة/العامة و/أو حماية المعرضين للخطر", "full_committee": "اللجنة البيئية", "joint": false}]}, {"crit_num": 45, "crit_text": "تعزيز الوصول إلى المرافق الرياضية والترفيهية (خارج الأماكن العامة)", "items": [{"num": 139, "text": "يتم تحديد هذه الأماكن أو المماشي", "full_committee": "اللجنة البيئية", "joint": false}, {"num": 140, "text": "وجود مبادرات لتعزيز النشاط البدني وممارسة الرياضة، مثل اشتراك مخفض للنوادي والصالات الرياضية أو في المولات الصحية", "full_committee": "اللجنة البيئية واللجنة الصحية", "joint": true}]}], "count": 7}, {"name": "المحور السادس: البيئة المدرسية والمبادرات الصحية المكانية", "desc": "دعم بيئة المدرسة والكافيتيريا الصحية، والمشاركة في مبادرة المدينة صديقة البيئة.", "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 80, "text": "تطبيق مبادرة المدينة صديقة البيئة", "full_committee": "اللجنة البيئية وإدارة المدن الصحية والمنسق العام", "joint": true}]}, {"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 171, "text": "بيئة المدرسة والكافيتيريا", "full_committee": "اللجنة التعليمية واللجنة البيئية", "joint": true}]}], "count": 2}]}, {"committee": "اللجنة التعليمية", "total_count": 12, "axes": [{"name": "المحور الأول: جودة التعليم وبيئة المدرسة الآمنة", "desc": "ضمان التسجيل المدرسي، والحد من التسرب، وتطبيق سياسات المدارس الخالية من العنف والتنمر والتدخين، ودمج ذوي الاحتياجات الخاصة.", "criteria": [{"crit_num": 51, "crit_text": "ضمان الوصول إلى التعليم الجيد لجميع الأطفال", "items": [{"num": 164, "text": "نسبة الأطفال المسجلين في سن المدرسة", "full_committee": "اللجنة التعليمية", "joint": false}, {"num": 165, "text": "معدلات التسرب", "full_committee": "اللجنة التعليمية", "joint": false}, {"num": 166, "text": "نسبة المدارس التي تتبنى مبادرة المدارس المعززة للصحة", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}, {"num": 167, "text": "المدارس لديها سجلات لجودة التعليم", "full_committee": "اللجنة التعليمية", "joint": false}, {"num": 168, "text": "الصحة المدرسية والفحص الدوري للطلاب", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}, {"num": 169, "text": "يتم تطبيق سياسة المدارس خالية من العنف والتنمر", "full_committee": "اللجنة التعليمية", "joint": false}, {"num": 170, "text": "يتم تطبيق سياسة المدارس خالية من التدخين والنيكوتين", "full_committee": "اللجنة التعليمية واللجنة الصحية", "joint": true}, {"num": 171, "text": "بيئة المدرسة والكافيتيريا", "full_committee": "اللجنة التعليمية واللجنة البيئية", "joint": true}, {"num": 172, "text": "دمج الأطفال ذوي الاحتياجات الخاصة", "full_committee": "اللجنة التعليمية", "joint": false}]}], "count": 9}, {"name": "المحور الثاني: التغذية المدرسية الصحية", "desc": "توفير وجبات صحية في المدارس والجامعات، وتنظيم أنشطة توعية للطلاب وأولياء الأمور.", "criteria": [{"crit_num": 48, "crit_text": "خلق بيئة داعمة للتغذية الصحية", "items": [{"num": 147, "text": "توافر وجبات صحية في أماكن العمل والمدارس والجامعات وأماكن التسوق", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية", "joint": true}, {"num": 148, "text": "يتم عمل أنشطة توعية للمجتمع وأولياء الأمور", "full_committee": "اللجنة الصحية واللجنة الاجتماعية واللجنة التعليمية واللجنة الإعلامية", "joint": true}]}], "count": 2}, {"name": "المحور الثالث: تعليم البالغين", "desc": "ضمان برامج محو الأمية للبالغين الأميين.", "criteria": [{"crit_num": 56, "crit_text": "ضمان التعليم للبالغين الأميين", "items": [{"num": 191, "text": "نسبة الأمية بين البالغين", "full_committee": "اللجنة التعليمية", "joint": false}]}], "count": 1}]}, {"committee": "إدارة المدن الصحية", "total_count": 22, "axes": [{"name": "المحور الأول: بناء القدرات المؤسسية", "desc": "تدريب أعضاء اللجان على مفهوم وأدوات المدينة الصحية، وبناء القدرات القيادية، وتقييم الأثر الصحي والإنصاف.", "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 4, "text": "تدريب أعضاء اللجنة الرئيسية واللجان الفرعية في مفهوم وأهداف المدينة الصحية وأدوات تطبيق منهجية المدن الصحية", "full_committee": "إدارة المدن الصحية", "joint": false}]}, {"crit_num": 11, "crit_text": "تعزيز الوعي وتنمية المهارات لأجل قيادة فاعلة", "items": [{"num": 30, "text": "عدد أنشطة التدريب على القيادة وبناء القدرات التي تستهدف إعداد القادة بما في ذلك الصف الثاني", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 12, "crit_text": "تعزيز القدرات على تقييم الأثر الصحي", "items": [{"num": 31, "text": "عدد الدورات التدريبية في مجال تقييم الأثر الصحي", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}, {"num": 32, "text": "عدد دراسات تقييم الأثر الصحي التي أجريت في المدينة الصحية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 13, "crit_text": "قياس عدم المساواة (التفاوت) من خلال أدوات قائمة على الأدلة مثل Urban HEART (أداة التقييم والاستجابة فيما يخص الإنصاف والمساواة في المجال الصحي في المناطق الحضرية)", "items": [{"num": 33, "text": "تدريب اللجنة الرئيسية/اللجنة الفرعية في المدينة الصحية على استخدام أدوات قائمة على الأدلة مثل Urban HEART لقياس عدم المساواة ووجود تقرير عن النتائج", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}], "count": 5}, {"name": "المحور الثاني: دعم السياسات والشراكات", "desc": "المساهمة في إدراج الصحة ضمن جميع السياسات القطاعية.", "criteria": [{"crit_num": 10, "crit_text": "تم إدراج الصحة في جميع السياسات وتعزيز الدبلوماسية الصحية من خلال التعاون والتنسيق بين القطاعات الحكومية والشركاء الفاعلين", "items": [{"num": 29, "text": "عدد السياسات/الاستراتيجيات/الخطط التي تعالج أو تدمج الصحة والمحددات الاجتماعية للصحة وتتماشى بشكل كامل مع أهداف التنمية المستدامة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية وإدارة المدن الصحية", "joint": true}]}], "count": 1}, {"name": "المحور الثالث: التخطيط الحضري المستدام", "desc": "دعم خطط التنمية الحضرية طويلة الأمد، واستخدام الأراضي، والتصميم الحضري الشامل.", "criteria": [{"crit_num": 24, "crit_text": "وجود خطة تنمية حضرية طويلة الأمد تدمج أهداف الصحة والرفاه بالإضافة إلى أهداف التنمية الحضرية التي تسهم في خفض الكربون", "items": [{"num": 59, "text": "لدى المدينة القدرة على صياغة وتنفيذ خطة تنمية حضرية على مستوى المدينة بنطاق متعدد القطاعات", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 60, "text": "اعتمدت المدينة خطة تنمية حضرية طويلة الأجل بنطاق متعدد القطاعات تدمج الصحة والتنمية الحضرية التي تسهم في خفض الكربون", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 61, "text": "السلطات المحلية واللجنة الرئيسية للمدينة تُقيّم الأثر الصحي للمشاريع التنموية وتنفذ الحلول المناسبة", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}, {"num": 62, "text": "يشارك المتطوعون ومنظمات المجتمع المدني في وضع الخطة وتحديد مقترحات التنمية", "full_committee": "اللجنة الرئيسية والمنسق العام للمدينة الصحية واللجنة الصحية وإدارة المدن الصحية ولجنة المحافظة الصحية", "joint": true}]}, {"crit_num": 25, "crit_text": "تعزيز الاستخدام الفعال للأراضي لتقليل التأثير البيئي؛ يتم تحديد ومراقبة نسبة استهلاك الأراضي حسب معدل التحضر إلى معدل النمو السكاني", "items": [{"num": 63, "text": "الدعوة إلى توازن نسبة معدل \"استهلاك الأراضي بسبب التوسع الحضري\" إلى معدل \"النمو السكاني\"", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 64, "text": "وجود استراتيجية/خطة التنمية الحضرية تقدم دعماً سياسياً للتنمية الحضرية المتوازنة", "full_committee": "اللجنة الرئيسية واللجان الفرعية والمنسق العام وإدارة المدن الصحية", "joint": true}]}, {"crit_num": 28, "crit_text": "تعزيز التصميم الحضري الشامل", "items": [{"num": 75, "text": "تقدم المدينة أدلة مستندية حول كيفية دمج عمليات التخطيط الحضري ونتائجه لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}, {"num": 76, "text": "تحدد المدينة/تبدأ/تكمل الإجراءات الداعمة لحق المجموعات المهمشة أو القاطنين في حواشي المدينة", "full_committee": "اللجنة الرئيسية والمنسق العام وإدارة المدن الصحية", "joint": true}]}], "count": 8}, {"name": "المحور الرابع: تنفيذ المبادرات الصحية المكانية", "desc": "دعم تنفيذ مبادرات الأماكن الصحية، وجعل المدينة مراعية لكبار السن.", "criteria": [{"crit_num": 30, "crit_text": "تنفيذ مبادرات الأماكن الصحية", "items": [{"num": 80, "text": "تطبيق مبادرة المدينة صديقة البيئة", "full_committee": "اللجنة البيئية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 81, "text": "تطبيق مبادرة أماكن العمل الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 82, "text": "تطبيق مبادرة المجمعات التجارية وأماكن التسوق المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 83, "text": "تطبيق مبادرة السجون الصحية", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 84, "text": "تطبيق مبادرة المؤسسات الصحية المراعية لفئات المجتمع (كبار السن، ذوي الاحتياجات الخاصة)", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية والمنسق العام", "joint": true}, {"num": 85, "text": "تطبيق مبادرة الجامعات المعززة للصحة", "full_committee": "اللجنة الصحية وإدارة المدن الصحية والمنسق العام", "joint": true}]}, {"crit_num": 55, "crit_text": "جعل المدينة مراعية لكبار السن", "items": [{"num": 190, "text": "تطبيق معايير منظمة الصحة العالمية للمدن المراعية لكبار السن، والتي تشمل النقل والخدمات والإدماج المجتمعي", "full_committee": "اللجنة الصحية واللجنة الاجتماعية وإدارة المدن الصحية", "joint": true}]}], "count": 7}, {"name": "المحور الخامس: دعم استدامة التمويل", "desc": "المساهمة في تدريب اللجنة المالية الفرعية على تعبئة الموارد.", "criteria": [{"crit_num": 68, "crit_text": "حشد الموارد بصورة مستمرة للمدينة الصحية", "items": [{"num": 218, "text": "تم تدريب اللجنة الفرعية المالية التابعة للجنة المدينة الصحية (أو قطاعات الحكومة المحلية) على تعبئة الموارد/جمع الأموال", "full_committee": "المنسق العام للمدينة الصحية واللجنة المالية وإدارة المدن الصحية", "joint": true}]}], "count": 1}]}, {"committee": "مكتب معالي المحافظة", "total_count": 1, "axes": [{"name": "المحور الأول: التأسيس المؤسسي للمدينة الصحية", "desc": "إصدار قرار تشكيل اللجنة الرئيسية للمدينة الصحية كنقطة انطلاق للعمل المؤسسي.", "criteria": [{"crit_num": 1, "crit_text": "يتم تدريب أعضاء لجنة المدينة الصحية واللجان الفرعية على مفهوم وأدوات المدينة الصحية", "items": [{"num": 1, "text": "تشكيل اللجنة الرئيسية للمدينة الصحية", "full_committee": "مكتب معالي المحافظة", "joint": false}]}], "count": 1}]}];
+</script>
+<script>
+(function(){
+  const committeeListEl = document.getElementById('committeeList');
+  const mainEl = document.getElementById('main');
+  const searchInput = document.getElementById('searchInput');
+  const searchMeta = document.getElementById('searchMeta');
+  const clearBtn = document.getElementById('clearBtn');
+  const showAllBtn = document.getElementById('showAllBtn');
+  const searchWrap = document.getElementById('searchWrap');
+  const indexHeadLabel = document.getElementById('indexHeadLabel');
+  const tabCharter = document.getElementById('tabCharter');
+  const tabRegistry = document.getElementById('tabRegistry');
+  const modeHint = document.getElementById('modeHint');
+
+  let mode = 'charter'; // 'charter' | 'registry'
+  let activeIndex = 0; // committee index within current mode's list
+
+  const toArabicDigits = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function highlight(text, q){
+    if(!q) return escapeHtml(text);
+    const esc = escapeHtml(text);
+    const escQ = escapeHtml(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return esc.replace(new RegExp(escQ, 'gi'), m => `<mark>${m}</mark>`);
+  }
+
+  function currentList(){
+    return mode === 'charter' ? CHARTERS : REGISTRY;
+  }
+
+  function buildSidebar(){
+    committeeListEl.innerHTML = '';
+    const list = currentList();
+    list.forEach((g, i) => {
+      const count = mode === 'charter' ? g.total_count : g.count;
+      const li = document.createElement('li');
+      li.innerHTML = `<button>
+          <span class="n">${toArabicDigits(i+1)}</span>
+          <span class="name">${escapeHtml(g.committee)}</span>
+          <span class="cnt">${toArabicDigits(count)}</span>
+        </button>`;
+      li.querySelector('button').addEventListener('click', () => {
+        activeIndex = i;
+        if(searchInput) searchInput.value = '';
+        render();
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+      committeeListEl.appendChild(li);
+    });
+    indexHeadLabel.textContent = mode === 'charter'
+      ? `اللجان الرئيسية (${toArabicDigits(CHARTERS.length)})`
+      : `فهرس اللجان (${toArabicDigits(REGISTRY.length)})`;
+    showAllBtn.textContent = mode === 'charter' ? 'الكل' : 'عرض الكل';
+  }
+
+  function updateActiveClasses(){
+    [...committeeListEl.children].forEach((li, i) => {
+      li.classList.toggle('active', activeIndex === i && (mode === 'charter' || !searchInput.value.trim()));
+    });
+  }
+
+  function setMode(newMode){
+    mode = newMode;
+    activeIndex = 0;
+    tabCharter.classList.toggle('active', mode === 'charter');
+    tabCharter.setAttribute('aria-selected', mode === 'charter');
+    tabRegistry.classList.toggle('active', mode === 'registry');
+    tabRegistry.setAttribute('aria-selected', mode === 'registry');
+    searchWrap.style.display = mode === 'registry' ? '' : 'none';
+    modeHint.textContent = mode === 'charter'
+      ? 'بطاقة مستقلة لكل لجنة: محاورها، شرح كل محور، ومعاييرها ومتطلباتها — لتوضيح اختصاص كل لجنة ومنع تداخل المهام.'
+      : 'كل اللجان والتركيبات المشتركة كما وردت في الوثيقة الأصلية، مع بحث فوري في النصوص.';
+    if(searchInput) searchInput.value = '';
+    buildSidebar();
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  tabCharter.addEventListener('click', () => setMode('charter'));
+  tabRegistry.addEventListener('click', () => setMode('registry'));
+
+  showAllBtn.addEventListener('click', () => {
+    if(mode === 'charter'){
+      renderAllCharters();
+      updateActiveClasses();
+    } else {
+      activeIndex = null;
+      searchInput.value = '';
+      render();
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    render();
+  });
+  searchInput.addEventListener('input', render);
+
+  function render(){
+    if(mode === 'charter'){
+      renderCharter(CHARTERS[activeIndex]);
+      updateActiveClasses();
+      return;
+    }
+    // registry mode
+    const q = searchInput.value.trim();
+    clearBtn.style.display = q ? 'inline-block' : 'none';
+    updateActiveClasses();
+    if(q){ renderSearch(q); return; }
+    if(activeIndex === null){ renderOverview(); }
+    else { renderCommittee(REGISTRY[activeIndex]); }
+  }
+
+  /* ---------------- Charter mode ---------------- */
+  function renderCharter(g){
+    searchMeta.textContent = '';
+    let html = `<div class="charter-head">
+      <div class="panel-eyebrow">بطاقة اختصاص لجنة</div>
+      <h2 class="panel-title">${escapeHtml(g.committee)}</h2>
+      <div class="charter-summary">
+        <div class="cs-item"><b>${toArabicDigits(g.axes.length)}</b>محاور عمل رئيسية</div>
+        <div class="cs-item"><b>${toArabicDigits(g.total_count)}</b>متطلباً ضمن اختصاصها</div>
+      </div>
+    </div>`;
+
+    g.axes.forEach(ax => {
+      html += `<div class="axis">
+        <div class="axis-head">
+          <p class="axis-name">${escapeHtml(ax.name)}</p>
+          <p class="axis-desc">${escapeHtml(ax.desc)}</p>
+        </div>
+        <div class="axis-body">`;
+      ax.criteria.forEach(c => {
+        if(c.items.length === 0) return;
+        html += `<div class="axis-criterion">
+          <div class="ac-head">المعيار ${toArabicDigits(c.crit_num)}: ${escapeHtml(c.crit_text)}</div>
+          <ol class="task-list">
+            ${c.items.map(it => `<li>
+                <span class="rn">${toArabicDigits(it.num)}</span>
+                <span class="rt">${escapeHtml(it.text)}${it.joint ? `<br><span class="joint-badge">بالتنسيق مع: ${escapeHtml(it.full_committee)}</span>` : ''}</span>
+              </li>`).join('')}
+          </ol>
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+    mainEl.innerHTML = html;
+  }
+
+  function renderAllCharters(){
+    let html = `<div class="panel-head">
+      <div class="panel-eyebrow">نظرة عامة</div>
+      <h2 class="panel-title">اللجان الرئيسية (١١)</h2>
+      <p class="panel-desc">اختر لجنة من الفهرس لعرض بطاقة اختصاصها الكاملة بمحاورها ومعاييرها ومتطلباتها.</p>
+    </div>`;
+    CHARTERS.forEach((g, i) => {
+      html += `<div class="criterion">
+        <div class="criterion-head">
+          <span class="cnum">${toArabicDigits(i+1)}.</span>
+          <span class="ctext">${escapeHtml(g.committee)} — ${toArabicDigits(g.axes.length)} محاور، ${toArabicDigits(g.total_count)} متطلب</span>
+        </div>
+      </div>`;
+    });
+    mainEl.innerHTML = html;
+    [...mainEl.querySelectorAll('.criterion')].forEach((el, i) => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => { activeIndex = i; render(); window.scrollTo({top:0, behavior:'smooth'}); });
+    });
+  }
+
+  /* ---------------- Registry mode (existing behaviour) ---------------- */
+  function renderOverview(){
+    searchMeta.textContent = '';
+    let html = `<div class="panel-head">
+      <div class="panel-eyebrow">نظرة عامة</div>
+      <h2 class="panel-title">كل اللجان والتركيبات (${toArabicDigits(REGISTRY.length)})</h2>
+      <p class="panel-desc">اختر لجنة من الفهرس على اليمين لعرض معاييرها ومتطلباتها، أو استخدم البحث أعلاه.</p>
+    </div>`;
+    REGISTRY.forEach((g, i) => {
+      html += `<div class="criterion">
+        <div class="criterion-head">
+          <span class="cnum">${toArabicDigits(i+1)}.</span>
+          <span class="ctext">${escapeHtml(g.committee)} — ${toArabicDigits(g.count)} متطلب</span>
+        </div>
+      </div>`;
+    });
+    mainEl.innerHTML = html;
+    [...mainEl.querySelectorAll('.criterion')].forEach((el, i) => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => { activeIndex = i; render(); window.scrollTo({top: 0, behavior:'smooth'}); });
+    });
+  }
+
+  function renderCommittee(g){
+    searchMeta.textContent = '';
+    let html = `<div class="panel-head">
+      <div class="panel-eyebrow">لجنة رقم ${toArabicDigits(REGISTRY.indexOf(g)+1)}</div>
+      <h2 class="panel-title">${escapeHtml(g.committee)}</h2>
+      <p class="panel-desc">${toArabicDigits(g.count)} متطلباً موزّعة على ${toArabicDigits(g.criteria.length)} معياراً</p>
+    </div>`;
+    g.criteria.forEach(c => {
+      html += `<div class="criterion">
+        <div class="criterion-head">
+          <span class="cnum">المعيار ${toArabicDigits(c.crit_num)}</span>
+          <span class="ctext">${escapeHtml(c.crit_text)}</span>
+        </div>
+        <ol class="req-list">
+          ${c.items.map(it => `<li><span class="rn">${toArabicDigits(it.num)}</span><span class="rt">${escapeHtml(it.text)}</span></li>`).join('')}
+        </ol>
+      </div>`;
+    });
+    mainEl.innerHTML = html;
+  }
+
+  function renderSearch(q){
+    const results = [];
+    REGISTRY.forEach((g, gi) => {
+      g.criteria.forEach(c => {
+        c.items.forEach(it => {
+          const hay = (it.text + ' ' + g.committee + ' ' + c.crit_text).toLowerCase();
+          if(hay.includes(q.toLowerCase())){
+            results.push({g, gi, c, it});
+          }
+        });
+      });
+    });
+
+    searchMeta.innerHTML = `تم العثور على <b>${toArabicDigits(results.length)}</b> نتيجة لـ "${escapeHtml(q)}"`;
+
+    if(results.length === 0){
+      mainEl.innerHTML = `<div class="empty-state">لا توجد نتائج مطابقة. جرّب كلمة أخرى أو امسح البحث لعرض جميع اللجان.</div>`;
+      return;
+    }
+
+    let html = `<div class="panel-head">
+      <div class="panel-eyebrow">نتائج البحث</div>
+      <h2 class="panel-title">"${escapeHtml(q)}"</h2>
+    </div>`;
+
+    results.forEach(r => {
+      html += `<div class="result-item">
+        <div class="tags">
+          <span class="tag">${escapeHtml(r.g.committee)}</span>
+          <span class="tag crit">المعيار ${toArabicDigits(r.c.crit_num)}: ${escapeHtml(r.c.crit_text)}</span>
+        </div>
+        <div><span class="rn">${toArabicDigits(r.it.num)}.</span>${highlight(r.it.text, q)}</div>
+      </div>`;
+    });
+    mainEl.innerHTML = html;
+  }
+
+  // init
+  buildSidebar();
+  render();
+})();
+</script>
+</body>
+</html>
