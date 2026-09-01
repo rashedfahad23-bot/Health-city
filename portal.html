@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة اللجان — المدينة الصحية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262A;
+    --ink-soft:#4B5B5E;
+    --paper:#F6F2E9;
+    --paper-raised:#FBF9F3;
+    --teal-deep:#123C47;
+    --teal-mid:#1F5A66;
+    --teal-tint:#E4EDEC;
+    --gold:#B9862E;
+    --gold-soft:#EFE0BE;
+    --line:#D8D0BC;
+    --line-soft:#E7E1D0;
+    --red:#9E4B3E;
+    --red-soft:#F3E3DF;
+    --green:#3E7A55;
+    --green-soft:#E2EEE4;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Tajawal',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  h1,h2,h3,.brand,.btn,.tab,.stat-num{font-family:'Cairo',sans-serif;}
+  ::selection{background:var(--gold-soft);}
+
+  /* ---- top bar ---- */
+  .topbar{
+    background:var(--teal-deep);
+    color:#fff;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;top:0;z-index:50;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .brand{font-weight:800;font-size:17px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;}
+  .brand small{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;color:var(--gold-soft);display:block;}
+  .user-chip{display:flex;align-items:center;gap:10px;font-size:13px;}
+  .user-chip .who{text-align:left;line-height:1.3;}
+  .user-chip .who b{display:block;font-size:14px;}
+  .user-chip .who span{color:#C9D6D6;font-size:12px;}
+  .logout-btn{
+    background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;
+    padding:6px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;
+    font-family:'Tajawal',sans-serif;
+  }
+  .logout-btn:hover{background:rgba(255,255,255,.1);}
+
+  /* ---- layout shells ---- */
+  .center-shell{
+    min-height:calc(100vh - 60px);
+    display:flex;align-items:center;justify-content:center;
+    padding:30px 16px;
+  }
+  .app-shell{max-width:1180px;margin:0 auto;padding:24px 18px 80px;}
+  .hidden{display:none !important;}
+
+  /* ---- auth card ---- */
+  .auth-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:32px 28px;
+    width:100%;max-width:400px;
+    box-shadow:0 10px 30px rgba(18,60,71,.08);
+  }
+  .auth-card h1{font-size:20px;margin:0 0 4px;color:var(--teal-deep);}
+  .auth-card p.sub{margin:0 0 22px;color:var(--ink-soft);font-size:13.5px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;font-weight:600;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius);
+    background:#fff;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--teal-mid);outline-offset:1px;}
+  .field textarea{resize:vertical;min-height:80px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    background:var(--teal-deep);color:#fff;border:none;padding:11px 18px;
+    border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;
+    font-family:'Cairo',sans-serif;
+  }
+  .btn:hover{background:var(--teal-mid);}
+  .btn.block{width:100%;}
+  .btn.gold{background:var(--gold);}
+  .btn.gold:hover{background:#a3762a;}
+  .btn.outline{background:transparent;color:var(--teal-deep);border:1px solid var(--teal-deep);}
+  .btn.outline:hover{background:var(--teal-tint);}
+  .btn.small{padding:6px 12px;font-size:12.5px;}
+  .btn.danger{background:var(--red);}
+  .btn.danger:hover{background:#853d32;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .toggle-link{margin-top:16px;text-align:center;font-size:13px;color:var(--ink-soft);}
+  .toggle-link a{color:var(--teal-mid);font-weight:700;cursor:pointer;text-decoration:none;}
+  .auth-error{
+    background:var(--red-soft);color:var(--red);padding:9px 12px;border-radius:var(--radius);
+    font-size:13px;margin-bottom:14px;display:none;
+  }
+  .auth-note{
+    background:var(--teal-tint);color:var(--teal-deep);padding:9px 12px;border-radius:var(--radius);
+    font-size:12.5px;margin-top:14px;line-height:1.6;
+  }
+
+  /* ---- pending screen ---- */
+  .pending-card{text-align:center;}
+  .pending-card .icon{font-size:34px;margin-bottom:6px;}
+
+  /* ---- dashboard header ---- */
+  .dash-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
+  .dash-head h1{font-size:22px;margin:0 0 4px;color:var(--teal-deep);}
+  .dash-head p{margin:0;color:var(--ink-soft);font-size:13.5px;}
+  .committee-badge{
+    display:inline-block;background:var(--teal-deep);color:#fff;padding:4px 12px;
+    border-radius:20px;font-size:12px;font-family:'Cairo',sans-serif;font-weight:700;margin-inline-end:6px;
+  }
+
+  /* ---- tabs ---- */
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap;}
+  .tab{
+    padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--ink-soft);cursor:pointer;
+    border-bottom:2px solid transparent;background:none;border-top:none;border-inline:none;
+    font-family:'Cairo',sans-serif;
+  }
+  .tab.active{color:var(--teal-deep);border-bottom-color:var(--gold);}
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* ---- stat cards ---- */
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;}
+  .stat-card{
+    background:var(--paper-raised);border:1px solid var(--line-soft);border-radius:6px;padding:16px;
+  }
+  .stat-num{font-size:26px;font-weight:800;color:var(--teal-deep);}
+  .stat-label{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+
+  /* ---- cards / lists ---- */
+  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap;}
+  .section-head h2{font-size:16px;margin:0;color:var(--teal-deep);}
+  .card-grid{display:grid;gap:12px;}
+  .item-card{
+    background:var(--paper-raised);border:1px solid var(--line-soft);border-radius:6px;
+    padding:14px 16px;
+  }
+  .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .item-title{font-weight:700;font-size:14.5px;color:var(--ink);margin:0 0 4px;}
+  .item-meta{font-size:12px;color:var(--ink-soft);display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+  .item-desc{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.6;}
+  .pill{
+    display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;
+    font-family:'Cairo',sans-serif;white-space:nowrap;
+  }
+  .pill.pending{background:var(--gold-soft);color:#7a5a1f;}
+  .pill.progress{background:var(--teal-tint);color:var(--teal-deep);}
+  .pill.done{background:var(--green-soft);color:var(--green);}
+  .pill.joint{background:var(--red-soft);color:var(--red);}
+  .empty-note{color:var(--ink-soft);font-size:13px;padding:22px;text-align:center;border:1px dashed var(--line);border-radius:6px;background:var(--paper-raised);}
+
+  .member-row{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--paper-raised);border:1px solid var(--line-soft);border-radius:6px;
+    padding:11px 14px;margin-bottom:8px;
+  }
+  .member-row .info b{font-size:14px;}
+  .member-row .info span{display:block;font-size:12px;color:var(--ink-soft);}
+  .avatar{
+    width:34px;height:34px;border-radius:50%;background:var(--teal-tint);color:var(--teal-deep);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;
+  }
+  .member-left{display:flex;align-items:center;gap:10px;}
+
+  .progress-bar{background:var(--line-soft);border-radius:20px;height:8px;overflow:hidden;margin-top:6px;}
+  .progress-bar > div{background:var(--teal-mid);height:100%;border-radius:20px;}
+
+  /* ---- modal ---- */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(18,38,42,.45);display:flex;align-items:center;justify-content:center;
+    z-index:100;padding:16px;
+  }
+  .modal{
+    background:#fff;border-radius:8px;padding:24px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+  }
+  .modal h3{margin:0 0 16px;font-size:17px;color:var(--teal-deep);}
+  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;}
+  .checklist{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-check{
+    border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:12.5px;cursor:pointer;
+    background:#fff;user-select:none;
+  }
+  .chip-check.active{background:var(--teal-deep);color:#fff;border-color:var(--teal-deep);}
+
+  /* ---- messages ---- */
+  .msg-layout{display:grid;grid-template-columns:220px 1fr;gap:16px;}
+  .msg-contacts{background:var(--paper-raised);border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;}
+  .msg-contact{padding:11px 14px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--line-soft);}
+  .msg-contact:hover{background:var(--teal-tint);}
+  .msg-contact.active{background:var(--teal-deep);color:#fff;}
+  .msg-thread{background:var(--paper-raised);border:1px solid var(--line-soft);border-radius:6px;display:flex;flex-direction:column;height:460px;}
+  .msg-scroll{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .msg-bubble{max-width:75%;padding:9px 13px;border-radius:12px;font-size:13.5px;line-height:1.5;}
+  .msg-bubble.mine{align-self:flex-start;background:var(--teal-deep);color:#fff;border-bottom-right-radius:3px;}
+  .msg-bubble.theirs{align-self:flex-end;background:#fff;border:1px solid var(--line-soft);border-bottom-left-radius:3px;}
+  .msg-bubble .t{display:block;font-size:10px;opacity:.65;margin-top:3px;}
+  .msg-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line-soft);}
+  .msg-input-row input{flex:1;padding:9px 12px;border:1px solid var(--line);border-radius:20px;font-family:'Tajawal',sans-serif;}
+  .msg-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-soft);font-size:13px;}
+
+  @media (max-width:640px){
+    .msg-layout{grid-template-columns:1fr;}
+    .row2{grid-template-columns:1fr;}
+    .topbar{padding:12px 14px;}
+    .user-chip .who{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">🏙️ بوابة اللجان<small>برنامج المدينة الصحية</small></div>
+  <div class="user-chip hidden" id="userChip">
+    <div class="who"><b id="userNameLbl"></b><span id="userRoleLbl"></span></div>
+    <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
+  </div>
+</div>
+
+<!-- AUTH: LOGIN -->
+<div class="center-shell" id="screenLogin">
+  <div class="auth-card">
+    <h1>تسجيل الدخول</h1>
+    <p class="sub">ادخل إلى لوحة لجنتك لمتابعة المهام والاجتماعات.</p>
+    <div class="auth-error" id="loginError"></div>
+    <div class="field"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="name@example.com"></div>
+    <div class="field"><label>كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+    <button class="btn block" id="loginBtn">دخول</button>
+    <div class="toggle-link">ما عندك حساب؟ <a id="goSignup">أنشئ حساب جديد</a></div>
+  </div>
+</div>
+
+<!-- AUTH: SIGNUP -->
+<div class="center-shell hidden" id="screenSignup">
+  <div class="auth-card">
+    <h1>إنشاء حساب</h1>
+    <p class="sub">اختر لجنتك ودورك، وسيتم تفعيل حسابك من رئيس اللجنة.</p>
+    <div class="auth-error" id="signupError"></div>
+    <div class="field"><label>الاسم الكامل</label><input type="text" id="suName" placeholder="مثال: فهد العتيبي"></div>
+    <div class="field"><label>البريد الإلكتروني</label><input type="email" id="suEmail" placeholder="name@example.com"></div>
+    <div class="field"><label>كلمة المرور</label><input type="password" id="suPass" placeholder="6 أحرف على الأقل"></div>
+    <div class="field"><label>اللجنة</label>
+      <select id="suCommittee"></select>
+    </div>
+    <div class="field"><label>الدور</label>
+      <select id="suRole">
+        <option value="member">عضو لجنة</option>
+        <option value="head">رئيس لجنة</option>
+      </select>
+    </div>
+    <button class="btn block gold" id="signupBtn">إنشاء الحساب</button>
+    <div class="toggle-link">عندك حساب؟ <a id="goLogin">سجّل الدخول</a></div>
+    <div class="auth-note">سيبقى الحساب "قيد المراجعة" حتى يوافق عليه رئيس اللجنة (أو مسؤول سابق فيها).</div>
+  </div>
+</div>
+
+<!-- PENDING -->
+<div class="center-shell hidden" id="screenPending">
+  <div class="auth-card pending-card">
+    <div class="icon">⏳</div>
+    <h1>حسابك قيد المراجعة</h1>
+    <p class="sub">تم إنشاء حسابك بنجاح في <b id="pendingCommittee"></b>. بانتظار موافقة رئيس اللجنة لتفعيل صلاحياتك.</p>
+    <button class="btn outline block" id="pendingRefresh">تحديث الحالة</button>
+  </div>
+</div>
+
+<!-- HEAD DASHBOARD -->
+<div class="app-shell hidden" id="screenHead">
+  <div class="dash-head">
+    <div>
+      <h1>لوحة رئيس اللجنة</h1>
+      <p><span class="committee-badge" id="headCommitteeLbl"></span>إدارة الأعضاء والمهام والاجتماعات</p>
+    </div>
+  </div>
+
+  <div class="stats-row" id="headStats"></div>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="p-members">الأعضاء</button>
+    <button class="tab" data-panel="p-tasks">المهام</button>
+    <button class="tab" data-panel="p-meetings">الاجتماعات</button>
+    <button class="tab" data-panel="p-reports">التقارير</button>
+    <button class="tab" data-panel="p-progress">الإنجاز</button>
+    <button class="tab" data-panel="p-messages">التواصل مع اللجان</button>
+  </div>
+
+  <div class="panel active" id="p-members">
+    <div class="section-head"><h2>طلبات الانضمام</h2></div>
+    <div id="pendingMembersList" class="card-grid"></div>
+    <div class="section-head" style="margin-top:22px;"><h2>أعضاء اللجنة المفعّلون</h2></div>
+    <div id="approvedMembersList" class="card-grid"></div>
+  </div>
+
+  <div class="panel" id="p-tasks">
+    <div class="section-head"><h2>المهام الموكلة</h2><button class="btn small gold" id="btnNewTask">+ توكيل مهمة جديدة</button></div>
+    <div id="tasksList" class="card-grid"></div>
+  </div>
+
+  <div class="panel" id="p-meetings">
+    <div class="section-head"><h2>الاجتماعات</h2><button class="btn small gold" id="btnNewMeeting">+ جدولة اجتماع</button></div>
+    <div id="meetingsListHead" class="card-grid"></div>
+  </div>
+
+  <div class="panel" id="p-reports">
+    <div class="section-head"><h2>تقارير الاجتماعات</h2><button class="btn small gold" id="btnNewReport">+ مشاركة تقرير</button></div>
+    <div id="reportsListHead" class="card-grid"></div>
+  </div>
+
+  <div class="panel" id="p-progress">
+    <div class="section-head"><h2>مستوى إنجاز الأعضاء</h2></div>
+    <div id="progressList" class="card-grid"></div>
+  </div>
+
+  <div class="panel" id="p-messages">
+    <div class="section-head"><h2>التواصل مع رؤساء اللجان الأخرى</h2></div>
+    <div class="msg-layout">
+      <div class="msg-contacts" id="headsContacts"></div>
+      <div class="msg-thread">
+        <div class="msg-scroll" id="msgScroll"><div class="msg-empty">اختر لجنة للمراسلة</div></div>
+        <div class="msg-input-row">
+          <input type="text" id="msgInput" placeholder="اكتب رسالتك…" disabled>
+          <button class="btn small" id="msgSendBtn" disabled>إرسال</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER DASHBOARD -->
+<div class="app-shell hidden" id="screenMember">
+  <div class="dash-head">
+    <div>
+      <h1>لوحة العضو</h1>
+      <p><span class="committee-badge" id="memberCommitteeLbl"></span>مهامك واجتماعاتك وتقارير لجنتك</p>
+    </div>
+  </div>
+
+  <div class="stats-row" id="memberStats"></div>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="m-tasks">مهامي</button>
+    <button class="tab" data-panel="m-meetings">الاجتماعات</button>
+    <button class="tab" data-panel="m-reports">التقارير</button>
+  </div>
+
+  <div class="panel active" id="m-tasks">
+    <div id="myTasksList" class="card-grid"></div>
+  </div>
+  <div class="panel" id="m-meetings">
+    <div id="meetingsListMember" class="card-grid"></div>
+  </div>
+  <div class="panel" id="m-reports">
+    <div id="reportsListMember" class="card-grid"></div>
+  </div>
+</div>
+
+<!-- Modal root -->
+<div id="modalRoot"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc,
+  collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAasRWhtwC1NEjJjjAfjuX5m1KUArmBObs",
+  authDomain: "healthy-city-4a090.firebaseapp.com",
+  projectId: "healthy-city-4a090",
+  storageBucket: "healthy-city-4a090.firebasestorage.app",
+  messagingSenderId: "314655225276",
+  appId: "1:314655225276:web:52a208506b6ab4d1e727b9"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const COMMITTEES = [
+  "اللجنة الرئيسية","المنسق العام","اللجنة الصحية","اللجنة الاجتماعية",
+  "اللجنة الأمنية والطوارئ","اللجنة الإعلامية","اللجنة المالية",
+  "اللجنة البيئية","اللجنة التعليمية","إدارة المدن الصحية","مكتب معالي المحافظة"
+];
+
+// ---------- helpers ----------
+const $ = (id) => document.getElementById(id);
+const show = (id) => { document.querySelectorAll('.center-shell, .app-shell').forEach(el=>el.classList.add('hidden')); $(id).classList.remove('hidden'); };
+const fmtDate = (ts) => {
+  if(!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('ar-KW', {year:'numeric',month:'short',day:'numeric'}) + ' — ' + d.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
+};
+const initials = (name) => (name||'?').trim().split(' ').slice(0,2).map(s=>s[0]).join('');
+
+// populate committee select
+const suCommittee = $('suCommittee');
+COMMITTEES.forEach(c=>{
+  const o = document.createElement('option'); o.value=c; o.textContent=c; suCommittee.appendChild(o);
+});
+
+let currentUser = null;   // firebase auth user
+let profile = null;       // firestore user doc data
+let unsubs = [];          // active listeners to clear on logout
+
+function clearListeners(){ unsubs.forEach(u=>u()); unsubs=[]; }
+
+// ---------- AUTH NAV ----------
+$('goSignup').onclick = ()=> show('screenSignup');
+$('goLogin').onclick = ()=> show('screenLogin');
+
+$('loginBtn').onclick = async ()=>{
+  const email = $('loginEmail').value.trim(), pass = $('loginPass').value;
+  $('loginError').style.display='none';
+  if(!email||!pass){ return errBox('loginError','عبّي البريد وكلمة المرور.'); }
+  try{
+    await signInWithEmailAndPassword(auth, email, pass);
+  }catch(e){ errBox('loginError', translateErr(e)); }
+};
+
+$('signupBtn').onclick = async ()=>{
+  const name = $('suName').value.trim(), email = $('suEmail').value.trim(),
+        pass = $('suPass').value, committee = $('suCommittee').value, role = $('suRole').value;
+  $('signupError').style.display='none';
+  if(!name||!email||!pass||pass.length<6){ return errBox('signupError','عبّي جميع الحقول، وكلمة المرور 6 أحرف على الأقل.'); }
+  try{
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, {displayName:name});
+    await setDoc(doc(db,'users',cred.user.uid), {
+      name, email, committee, role, status:'pending', createdAt: serverTimestamp()
+    });
+  }catch(e){ errBox('signupError', translateErr(e)); }
+};
+
+$('pendingRefresh').onclick = ()=> loadProfileAndRoute(currentUser);
+
+$('logoutBtn').onclick = async ()=>{ clearListeners(); await signOut(auth); };
+
+function errBox(id,msg){ const el=$(id); el.textContent=msg; el.style.display='block'; }
+function translateErr(e){
+  const c = e.code||'';
+  if(c.includes('email-already-in-use')) return 'هذا البريد مسجّل مسبقاً.';
+  if(c.includes('invalid-credential')||c.includes('wrong-password')||c.includes('user-not-found')) return 'البريد أو كلمة المرور غير صحيحة.';
+  if(c.includes('weak-password')) return 'كلمة المرور ضعيفة جداً.';
+  if(c.includes('invalid-email')) return 'صيغة البريد غير صحيحة.';
+  return 'حدث خطأ، حاول مرة أخرى.';
+}
+
+// ---------- AUTH STATE ----------
+onAuthStateChanged(auth, (user)=>{
+  currentUser = user;
+  clearListeners();
+  if(!user){ show('screenLogin'); $('userChip').classList.add('hidden'); return; }
+  loadProfileAndRoute(user);
+});
+
+async function loadProfileAndRoute(user){
+  const snap = await getDoc(doc(db,'users',user.uid));
+  if(!snap.exists()){ show('screenLogin'); return; }
+  profile = {id:user.uid, ...snap.data()};
+  $('userChip').classList.remove('hidden');
+  $('userNameLbl').textContent = profile.name;
+  $('userRoleLbl').textContent = (profile.role==='head'?'رئيس ':'عضو ') + profile.committee;
+
+  if(profile.status!=='approved' && profile.role==='member'){
+    $('pendingCommittee').textContent = profile.committee;
+    show('screenPending');
+    return;
+  }
+  if(profile.role==='head'){
+    // auto-approve heads (need at least one active head per committee)
+    if(profile.status!=='approved'){ await updateDoc(doc(db,'users',user.uid), {status:'approved'}); profile.status='approved'; }
+    routeHead();
+  } else {
+    routeMember();
+  }
+}
+
+// ---------- TABS ----------
+document.querySelectorAll('.tab').forEach(tabBtn=>{
+  tabBtn.addEventListener('click', ()=>{
+    const group = tabBtn.parentElement.parentElement;
+    group.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    group.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tabBtn.classList.add('active');
+    $(tabBtn.dataset.panel).classList.add('active');
+  });
+});
+
+// ============================================================
+// HEAD DASHBOARD
+// ============================================================
+function routeHead(){
+  show('screenHead');
+  $('headCommitteeLbl').textContent = profile.committee;
+  listenMembers();
+  listenTasksHead();
+  listenMeetings('head');
+  listenReports('head');
+  listenHeadsForMessaging();
+}
+
+let allMembersCache = [];
+function listenMembers(){
+  const qy = query(collection(db,'users'), where('committee','==',profile.committee), where('role','==','member'));
+  const un = onSnapshot(qy, snap=>{
+    allMembersCache = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    renderMembers();
+    renderStatsHead();
+    renderProgress();
+  });
+  unsubs.push(un);
+}
+
+function renderMembers(){
+  const pending = allMembersCache.filter(m=>m.status==='pending');
+  const approved = allMembersCache.filter(m=>m.status==='approved');
+
+  $('pendingMembersList').innerHTML = pending.length ? '' : '<div class="empty-note">لا توجد طلبات انضمام جديدة.</div>';
+  pending.forEach(m=>{
+    const el = document.createElement('div');
+    el.className='member-row';
+    el.innerHTML = `
+      <div class="member-left"><div class="avatar">${initials(m.name)}</div>
+        <div class="info"><b>${m.name}</b><span>${m.email}</span></div></div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn small gold" data-approve="${m.id}">قبول</button>
+        <button class="btn small danger" data-reject="${m.id}">رفض</button>
+      </div>`;
+    $('pendingMembersList').appendChild(el);
+  });
+
+  $('approvedMembersList').innerHTML = approved.length ? '' : '<div class="empty-note">لا يوجد أعضاء مفعّلون بعد.</div>';
+  approved.forEach(m=>{
+    const el = document.createElement('div');
+    el.className='member-row';
+    el.innerHTML = `
+      <div class="member-left"><div class="avatar">${initials(m.name)}</div>
+        <div class="info"><b>${m.name}</b><span>${m.email}</span></div></div>
+      <button class="btn small danger" data-remove="${m.id}">إزالة</button>`;
+    $('approvedMembersList').appendChild(el);
+  });
+
+  $('pendingMembersList').querySelectorAll('[data-approve]').forEach(b=>b.onclick=()=>updateDoc(doc(db,'users',b.dataset.approve),{status:'approved'}));
+  $('pendingMembersList').querySelectorAll('[data-reject]').forEach(b=>b.onclick=()=>{ if(confirm('رفض طلب الانضمام؟')) deleteDoc(doc(db,'users',b.dataset.reject)); });
+  $('approvedMembersList').querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{ if(confirm('إزالة هذا العضو من اللجنة؟')) updateDoc(doc(db,'users',b.dataset.remove),{status:'removed'}); });
+}
+
+function renderStatsHead(){
+  const approved = allMembersCache.filter(m=>m.status==='approved').length;
+  const pending = allMembersCache.filter(m=>m.status==='pending').length;
+  $('headStats').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${approved}</div><div class="stat-label">عضو مفعّل</div></div>
+    <div class="stat-card"><div class="stat-num">${pending}</div><div class="stat-label">طلب بانتظار الموافقة</div></div>
+    <div class="stat-card"><div class="stat-num" id="statTasksOpen">–</div><div class="stat-label">مهمة قيد التنفيذ</div></div>
+    <div class="stat-card"><div class="stat-num" id="statMeetingsUpcoming">–</div><div class="stat-label">اجتماع قادم</div></div>
+  `;
+}
+
+// ---- TASKS (head) ----
+let tasksHeadCache = [];
+function listenTasksHead(){
+  const qy = query(collection(db,'tasks'), where('committee','==',profile.committee));
+  const un = onSnapshot(qy, snap=>{
+    tasksHeadCache = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    renderTasksHead();
+    const openCount = tasksHeadCache.filter(t=>t.status!=='done').length;
+    const el = $('statTasksOpen'); if(el) el.textContent = openCount;
+  });
+  unsubs.push(un);
+}
+function pillFor(status){
+  if(status==='done') return '<span class="pill done">مكتملة</span>';
+  if(status==='progress') return '<span class="pill progress">قيد التنفيذ</span>';
+  return '<span class="pill pending">لم تبدأ</span>';
+}
+function renderTasksHead(){
+  $('tasksList').innerHTML = tasksHeadCache.length ? '' : '<div class="empty-note">ما فيه مهام موكلة بعد. اضغط "توكيل مهمة جديدة".</div>';
+  tasksHeadCache.forEach(t=>{
+    const el = document.createElement('div'); el.className='item-card';
+    el.innerHTML = `
+      <div class="item-top">
+        <div><p class="item-title">${t.title}</p>${t.description?`<div class="item-desc">${t.description}</div>`:''}</div>
+        ${pillFor(t.status)}
+      </div>
+      <div class="item-meta">
+        <span>👤 ${t.assignedToName||'—'}</span>
+        ${t.dueDate?`<span>📅 موعد التسليم: ${t.dueDate}</span>`:''}
+      </div>`;
+    $('tasksList').appendChild(el);
+  });
+}
+
+$('btnNewTask').onclick = ()=>{
+  const members = allMembersCache.filter(m=>m.status==='approved');
+  if(!members.length){ alert('ما فيه أعضاء مفعّلون بعد لتوكيل مهمة لهم.'); return; }
+  openModal(`
+    <h3>توكيل مهمة جديدة</h3>
+    <div class="field"><label>عنوان المهمة</label><input id="mTaskTitle" type="text" placeholder="مثال: إعداد تقرير الحملة التوعوية"></div>
+    <div class="field"><label>الوصف (اختياري)</label><textarea id="mTaskDesc"></textarea></div>
+    <div class="field"><label>العضو المسؤول</label><select id="mTaskMember">${members.map(m=>`<option value="${m.id}|${m.name}">${m.name}</option>`).join('')}</select></div>
+    <div class="field"><label>موعد التسليم (اختياري)</label><input id="mTaskDue" type="date"></div>
+    <div class="modal-actions"><button class="btn outline" id="mCancel">إلغاء</button><button class="btn gold" id="mSave">توكيل المهمة</button></div>
+  `);
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = async ()=>{
+    const title = $('mTaskTitle').value.trim();
+    if(!title){ alert('اكتب عنوان المهمة.'); return; }
+    const [uid,name] = $('mTaskMember').value.split('|');
+    await addDoc(collection(db,'tasks'), {
+      committee:profile.committee, title, description:$('mTaskDesc').value.trim(),
+      assignedTo:uid, assignedToName:name, dueDate:$('mTaskDue').value||null,
+      status:'pending', createdBy:profile.name, createdAt:serverTimestamp()
+    });
+    closeModal();
+  };
+};
+
+// ---- MEETINGS ----
+let meetingsCache = [];
+function listenMeetings(mode){
+  const qy = query(collection(db,'meetings'), where('committees','array-contains',profile.committee));
+  const un = onSnapshot(qy, snap=>{
+    meetingsCache = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(a.datetime||'').localeCompare(b.datetime||''));
+    if(mode==='head') renderMeetingsHead(); else renderMeetingsMember();
+    const upcoming = meetingsCache.filter(m=> m.datetime && new Date(m.datetime) >= new Date()).length;
+    const el = $('statMeetingsUpcoming'); if(el) el.textContent = upcoming;
+  });
+  unsubs.push(un);
+}
+function meetingCardHTML(m){
+  const joint = m.committees.length>1;
+  const others = m.committees.filter(c=>c!==profile.committee);
+  return `
+    <div class="item-card">
+      <div class="item-top">
+        <div><p class="item-title">${m.title}</p>${m.agenda?`<div class="item-desc">${m.agenda}</div>`:''}</div>
+        ${joint?'<span class="pill joint">اجتماع مشترك</span>':''}
+      </div>
+      <div class="item-meta">
+        <span>🕐 ${m.datetime ? new Date(m.datetime).toLocaleString('ar-KW',{dateStyle:'medium',timeStyle:'short'}) : '—'}</span>
+        ${joint?`<span>🤝 مع: ${others.join('، ')}</span>`:''}
+      </div>
+    </div>`;
+}
+function renderMeetingsHead(){
+  $('meetingsListHead').innerHTML = meetingsCache.length? meetingsCache.map(meetingCardHTML).join('') : '<div class="empty-note">ما فيه اجتماعات مجدولة بعد.</div>';
+}
+function renderMeetingsMember(){
+  $('meetingsListMember').innerHTML = meetingsCache.length? meetingsCache.map(meetingCardHTML).join('') : '<div class="empty-note">ما فيه اجتماعات مجدولة حالياً.</div>';
+}
+
+$('btnNewMeeting').onclick = ()=>{
+  openModal(`
+    <h3>جدولة اجتماع</h3>
+    <div class="field"><label>عنوان الاجتماع</label><input id="mMeetTitle" type="text"></div>
+    <div class="field"><label>جدول الأعمال (اختياري)</label><textarea id="mMeetAgenda"></textarea></div>
+    <div class="field"><label>التاريخ والوقت</label><input id="mMeetDate" type="datetime-local"></div>
+    <div class="field"><label>لجان مشاركة (اختر عند وجود اجتماع مشترك)</label>
+      <div class="checklist" id="mMeetCommittees">
+        ${COMMITTEES.filter(c=>c!==profile.committee).map(c=>`<div class="chip-check" data-c="${c}">${c}</div>`).join('')}
+      </div>
+    </div>
+    <div class="modal-actions"><button class="btn outline" id="mCancel">إلغاء</button><button class="btn gold" id="mSave">جدولة الاجتماع</button></div>
+  `);
+  document.querySelectorAll('#mMeetCommittees .chip-check').forEach(chip=>{
+    chip.onclick = ()=> chip.classList.toggle('active');
+  });
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = async ()=>{
+    const title = $('mMeetTitle').value.trim();
+    if(!title){ alert('اكتب عنوان الاجتماع.'); return; }
+    const extra = Array.from(document.querySelectorAll('#mMeetCommittees .chip-check.active')).map(c=>c.dataset.c);
+    await addDoc(collection(db,'meetings'), {
+      title, agenda:$('mMeetAgenda').value.trim(), datetime:$('mMeetDate').value||null,
+      committees:[profile.committee, ...extra], createdBy:profile.name, createdAt:serverTimestamp()
+    });
+    closeModal();
+  };
+};
+
+// ---- REPORTS ----
+let reportsCache = [];
+function listenReports(mode){
+  const qy = query(collection(db,'reports'), where('committees','array-contains',profile.committee));
+  const un = onSnapshot(qy, snap=>{
+    reportsCache = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    if(mode==='head') renderReportsHead(); else renderReportsMember();
+  });
+  unsubs.push(un);
+}
+function reportCardHTML(r){
+  const joint = r.committees.length>1;
+  return `
+    <div class="item-card">
+      <div class="item-top">
+        <div><p class="item-title">${r.title}</p><div class="item-desc">${r.content}</div></div>
+        ${joint?'<span class="pill joint">مشترك</span>':''}
+      </div>
+      <div class="item-meta"><span>✍️ ${r.createdBy}</span><span>🕐 ${fmtDate(r.createdAt)}</span></div>
+    </div>`;
+}
+function renderReportsHead(){
+  $('reportsListHead').innerHTML = reportsCache.length? reportsCache.map(reportCardHTML).join('') : '<div class="empty-note">لا توجد تقارير بعد.</div>';
+}
+function renderReportsMember(){
+  $('reportsListMember').innerHTML = reportsCache.length? reportsCache.map(reportCardHTML).join('') : '<div class="empty-note">لا توجد تقارير مشتركة مع لجنتك بعد.</div>';
+}
+$('btnNewReport').onclick = ()=>{
+  openModal(`
+    <h3>مشاركة تقرير اجتماع</h3>
+    <div class="field"><label>عنوان التقرير</label><input id="mRepTitle" type="text" placeholder="مثال: محضر اجتماع 3 سبتمبر"></div>
+    <div class="field"><label>محتوى التقرير</label><textarea id="mRepContent" style="min-height:120px;"></textarea></div>
+    <div class="field"><label>مشاركة مع لجان أخرى (اختياري)</label>
+      <div class="checklist" id="mRepCommittees">
+        ${COMMITTEES.filter(c=>c!==profile.committee).map(c=>`<div class="chip-check" data-c="${c}">${c}</div>`).join('')}
+      </div>
+    </div>
+    <div class="modal-actions"><button class="btn outline" id="mCancel">إلغاء</button><button class="btn gold" id="mSave">نشر التقرير</button></div>
+  `);
+  document.querySelectorAll('#mRepCommittees .chip-check').forEach(chip=>{ chip.onclick=()=>chip.classList.toggle('active'); });
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = async ()=>{
+    const title=$('mRepTitle').value.trim(), content=$('mRepContent').value.trim();
+    if(!title||!content){ alert('عبّي العنوان والمحتوى.'); return; }
+    const extra = Array.from(document.querySelectorAll('#mRepCommittees .chip-check.active')).map(c=>c.dataset.c);
+    await addDoc(collection(db,'reports'),{
+      title, content, committees:[profile.committee, ...extra], createdBy:profile.name, createdAt:serverTimestamp()
+    });
+    closeModal();
+  };
+};
+
+// ---- PROGRESS ----
+function renderProgress(){
+  const approved = allMembersCache.filter(m=>m.status==='approved');
+  if(!approved.length){ $('progressList').innerHTML='<div class="empty-note">ما فيه أعضاء لعرض إنجازهم.</div>'; return; }
+  $('progressList').innerHTML = approved.map(m=>{
+    const mine = tasksHeadCache.filter(t=>t.assignedTo===m.id);
+    const done = mine.filter(t=>t.status==='done').length;
+    const pct = mine.length ? Math.round(done/mine.length*100) : 0;
+    return `
+      <div class="item-card">
+        <div class="item-top">
+          <div class="member-left"><div class="avatar">${initials(m.name)}</div><b>${m.name}</b></div>
+          <span class="pill ${pct===100&&mine.length?'done':'progress'}">${pct}%</span>
+        </div>
+        <div class="progress-bar"><div style="width:${pct}%"></div></div>
+        <div class="item-meta"><span>${done} من ${mine.length} مهمة مكتملة</span></div>
+      </div>`;
+  }).join('');
+}
+
+// ---- MESSAGES (head to head) ----
+let headsCache = [];
+let activeThreadWith = null;
+function listenHeadsForMessaging(){
+  const qy = query(collection(db,'users'), where('role','==','head'), where('status','==','approved'));
+  const un = onSnapshot(qy, snap=>{
+    headsCache = snap.docs.map(d=>({id:d.id,...d.data()})).filter(h=>h.id!==profile.id);
+    $('headsContacts').innerHTML = headsCache.length? headsCache.map(h=>`<div class="msg-contact" data-id="${h.id}">${h.committee}<br><small style="opacity:.65">${h.name}</small></div>`).join('') : '<div class="msg-contact">لا يوجد رؤساء لجان آخرون بعد.</div>';
+    document.querySelectorAll('.msg-contact[data-id]').forEach(el=>{
+      el.onclick = ()=> openThread(el.dataset.id);
+    });
+  });
+  unsubs.push(un);
+}
+function openThread(otherUid){
+  activeThreadWith = otherUid;
+  document.querySelectorAll('.msg-contact').forEach(el=>el.classList.toggle('active', el.dataset.id===otherUid));
+  $('msgInput').disabled=false; $('msgSendBtn').disabled=false;
+  const pairKey = [profile.id, otherUid].sort().join('_');
+  const qy = query(collection(db,'messages'), where('pairKey','==',pairKey), orderBy('createdAt','asc'));
+  const un = onSnapshot(qy, snap=>{
+    const msgs = snap.docs.map(d=>d.data());
+    $('msgScroll').innerHTML = msgs.length ? msgs.map(m=>`
+      <div class="msg-bubble ${m.senderId===profile.id?'mine':'theirs'}">${m.text}<span class="t">${fmtDate(m.createdAt)}</span></div>
+    `).join('') : '<div class="msg-empty">ابدأ المحادثة…</div>';
+    $('msgScroll').scrollTop = $('msgScroll').scrollHeight;
+  });
+  unsubs.push(un);
+}
+$('msgSendBtn').onclick = sendMsg;
+$('msgInput').addEventListener('keydown', e=>{ if(e.key==='Enter') sendMsg(); });
+async function sendMsg(){
+  const text = $('msgInput').value.trim();
+  if(!text || !activeThreadWith) return;
+  const pairKey = [profile.id, activeThreadWith].sort().join('_');
+  $('msgInput').value='';
+  await addDoc(collection(db,'messages'), {
+    pairKey, senderId:profile.id, receiverId:activeThreadWith, text, createdAt:serverTimestamp()
+  });
+}
+
+// ============================================================
+// MEMBER DASHBOARD
+// ============================================================
+function routeMember(){
+  show('screenMember');
+  $('memberCommitteeLbl').textContent = profile.committee;
+  listenMyTasks();
+  listenMeetings('member');
+  listenReports('member');
+}
+let myTasksCache = [];
+function listenMyTasks(){
+  const qy = query(collection(db,'tasks'), where('assignedTo','==',profile.id));
+  const un = onSnapshot(qy, snap=>{
+    myTasksCache = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    renderMyTasks();
+    const done = myTasksCache.filter(t=>t.status==='done').length;
+    $('memberStats').innerHTML = `
+      <div class="stat-card"><div class="stat-num">${myTasksCache.length}</div><div class="stat-label">إجمالي المهام</div></div>
+      <div class="stat-card"><div class="stat-num">${done}</div><div class="stat-label">مهام مكتملة</div></div>
+      <div class="stat-card"><div class="stat-num">${myTasksCache.length-done}</div><div class="stat-label">مهام متبقية</div></div>
+    `;
+  });
+  unsubs.push(un);
+}
+function renderMyTasks(){
+  $('myTasksList').innerHTML = myTasksCache.length ? '' : '<div class="empty-note">ما عندك مهام موكلة حالياً.</div>';
+  myTasksCache.forEach(t=>{
+    const el = document.createElement('div'); el.className='item-card';
+    el.innerHTML = `
+      <div class="item-top">
+        <div><p class="item-title">${t.title}</p>${t.description?`<div class="item-desc">${t.description}</div>`:''}</div>
+        ${pillFor(t.status)}
+      </div>
+      <div class="item-meta">${t.dueDate?`<span>📅 موعد التسليم: ${t.dueDate}</span>`:''}</div>
+      <div style="margin-top:10px;display:flex;gap:6px;">
+        <button class="btn small outline" data-set="${t.id}|pending">لم تبدأ</button>
+        <button class="btn small outline" data-set="${t.id}|progress">قيد التنفيذ</button>
+        <button class="btn small gold" data-set="${t.id}|done">تم الإنجاز</button>
+      </div>`;
+    $('myTasksList').appendChild(el);
+  });
+  $('myTasksList').querySelectorAll('[data-set]').forEach(b=>{
+    b.onclick = ()=>{
+      const [id,status] = b.dataset.set.split('|');
+      updateDoc(doc(db,'tasks',id), {status});
+    };
+  });
+}
+
+// ---------- MODAL ----------
+function openModal(html){
+  $('modalRoot').innerHTML = `<div class="modal-bg" id="modalBg"><div class="modal">${html}</div></div>`;
+  $('modalBg').addEventListener('click', (e)=>{ if(e.target.id==='modalBg') closeModal(); });
+}
+function closeModal(){ $('modalRoot').innerHTML=''; }
+
+</script>
+</body>
+</html>
