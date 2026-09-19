@@ -96,6 +96,31 @@
     font-size:13px;
     color:#AFC7C4;
   }
+  .map-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold); color:#1c1204;
+    font-family:'Cairo',sans-serif; font-weight:700; font-size:13.5px;
+    padding:10px 18px; text-decoration:none; margin-top:20px;
+    border-radius:2px;
+  }
+  .map-cta:hover{ background:#EFE0BE; }
+
+  /* ---------- Domain accordion (sidebar) ---------- */
+  details.domain-group{ border-bottom:1px solid var(--line-soft); }
+  details.domain-group summary{
+    cursor:pointer; list-style:none;
+    padding:12px 16px;
+    font-family:'Cairo',sans-serif; font-weight:700; font-size:13.5px;
+    color:var(--teal-deep);
+    background:var(--teal-tint);
+    display:flex; align-items:center; gap:9px;
+  }
+  details.domain-group summary::-webkit-details-marker{ display:none; }
+  details.domain-group summary .ddot{ width:9px;height:9px;border-radius:50%; flex:none; }
+  details.domain-group summary .dname{ flex:1; }
+  details.domain-group summary .dcount{ font-size:11px; color:var(--ink-soft); font-family:'Tajawal',sans-serif; }
+  details.domain-group summary::after{ content:'▾'; font-size:10px; color:var(--ink-soft); flex:none; transition:transform .15s; }
+  details.domain-group[open] summary::after{ transform:rotate(180deg); }
 
   /* ---------- Mode tabs ---------- */
   .mode-tabs-wrap{
@@ -399,6 +424,7 @@
       <div class="stat"><span class="num">٢٢٠</span><span class="label">متطلباً تفصيلياً</span></div>
       <div class="stat"><span class="num">١١</span><span class="label">لجنة رئيسية معتمدة</span></div>
     </div>
+    <a class="map-cta" href="map.html">🗺️ عرض الخريطة التفاعلية لسير العمل والتنسيق بين اللجان ←</a>
   </div>
 </header>
 
@@ -443,6 +469,17 @@ const CHARTERS = [{"committee": "اللجنة الرئيسية", "total_count": 
 </script>
 <script>
 (function(){
+  const DOMAINS = [
+    { key:'gov', name:'الإدارة والتنسيق العام', color:'#123C47',
+      committees:['اللجنة الرئيسية','المنسق العام للمدينة الصحية','إدارة المدن الصحية','مكتب معالي المحافظة'] },
+    { key:'health', name:'المجال الصحي والاجتماعي', color:'#1F7A5C',
+      committees:['اللجنة الصحية','اللجنة الاجتماعية'] },
+    { key:'safety', name:'المجال الأمني والبيئي', color:'#9E4B3E',
+      committees:['اللجنة الأمنية والطوارئ','اللجنة البيئية'] },
+    { key:'media', name:'الإعلام والتعليم والمالية', color:'#B9862E',
+      committees:['اللجنة الإعلامية','اللجنة التعليمية','اللجنة المالية'] },
+  ];
+
   const committeeListEl = document.getElementById('committeeList');
   const mainEl = document.getElementById('main');
   const searchInput = document.getElementById('searchInput');
@@ -476,14 +513,53 @@ const CHARTERS = [{"committee": "اللجنة الرئيسية", "total_count": 
 
   function buildSidebar(){
     committeeListEl.innerHTML = '';
-    const list = currentList();
-    list.forEach((g, i) => {
-      const count = mode === 'charter' ? g.total_count : g.count;
+    if(mode === 'charter'){
+      DOMAINS.forEach(dom => {
+        const items = dom.committees
+          .map(name => CHARTERS.findIndex(g => g.committee === name))
+          .filter(i => i !== -1);
+        if(!items.length) return;
+        const details = document.createElement('details');
+        details.className = 'domain-group';
+        details.open = true;
+        const totalReq = items.reduce((s,i) => s + CHARTERS[i].total_count, 0);
+        details.innerHTML = `<summary>
+            <span class="ddot" style="background:${dom.color}"></span>
+            <span class="dname">${escapeHtml(dom.name)}</span>
+            <span class="dcount">${toArabicDigits(items.length)} لجان · ${toArabicDigits(totalReq)} متطلب</span>
+          </summary>
+          <ul class="committee-list nested"></ul>`;
+        const ul = details.querySelector('ul');
+        items.forEach(i => {
+          const g = CHARTERS[i];
+          const li = document.createElement('li');
+          li.dataset.idx = i;
+          li.innerHTML = `<button>
+              <span class="n">${toArabicDigits(i+1)}</span>
+              <span class="name">${escapeHtml(g.committee)}</span>
+              <span class="cnt">${toArabicDigits(g.total_count)}</span>
+            </button>`;
+          li.querySelector('button').addEventListener('click', () => {
+            activeIndex = i;
+            render();
+            window.scrollTo({top:0, behavior:'smooth'});
+          });
+          ul.appendChild(li);
+        });
+        committeeListEl.appendChild(details);
+      });
+      indexHeadLabel.textContent = `اللجان مصنّفة حسب المجال (${toArabicDigits(CHARTERS.length)})`;
+      showAllBtn.textContent = 'الكل';
+      return;
+    }
+    // registry mode — flat list as before
+    REGISTRY.forEach((g, i) => {
       const li = document.createElement('li');
+      li.dataset.idx = i;
       li.innerHTML = `<button>
           <span class="n">${toArabicDigits(i+1)}</span>
           <span class="name">${escapeHtml(g.committee)}</span>
-          <span class="cnt">${toArabicDigits(count)}</span>
+          <span class="cnt">${toArabicDigits(g.count)}</span>
         </button>`;
       li.querySelector('button').addEventListener('click', () => {
         activeIndex = i;
@@ -493,15 +569,14 @@ const CHARTERS = [{"committee": "اللجنة الرئيسية", "total_count": 
       });
       committeeListEl.appendChild(li);
     });
-    indexHeadLabel.textContent = mode === 'charter'
-      ? `اللجان الرئيسية (${toArabicDigits(CHARTERS.length)})`
-      : `فهرس اللجان (${toArabicDigits(REGISTRY.length)})`;
-    showAllBtn.textContent = mode === 'charter' ? 'الكل' : 'عرض الكل';
+    indexHeadLabel.textContent = `فهرس اللجان (${toArabicDigits(REGISTRY.length)})`;
+    showAllBtn.textContent = 'عرض الكل';
   }
 
   function updateActiveClasses(){
-    [...committeeListEl.children].forEach((li, i) => {
-      li.classList.toggle('active', activeIndex === i && (mode === 'charter' || !searchInput.value.trim()));
+    const showActive = mode === 'charter' || !searchInput.value.trim();
+    committeeListEl.querySelectorAll('li[data-idx]').forEach(li => {
+      li.classList.toggle('active', showActive && Number(li.dataset.idx) === activeIndex);
     });
   }
 
